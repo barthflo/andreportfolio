@@ -7,6 +7,7 @@ body {
     padding : 0;
     box-sizing : border-box;
     background: #1D1E20;
+	color: white;
 }
 a {
     text-decoration : none;
