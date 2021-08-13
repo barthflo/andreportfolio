@@ -45,16 +45,16 @@ export default RenderRoutes;
 
 export const routes = [
 	{
+		path: '/403',
+		exact: true,
+		guard: Fragment,
+		component: React.lazy(() => import('../../views/Errors/403')),
+	},
+	{
 		path: '/404',
 		exact: true,
 		guard: Fragment,
 		component: React.lazy(() => import('../../views/Errors/404')),
-	},
-	{
-		path: '/405',
-		exact: true,
-		guard: Fragment,
-		component: React.lazy(() => import('../../views/Errors/405')),
 	},
 	{
 		path: '/admin',
