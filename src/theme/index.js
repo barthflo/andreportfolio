@@ -38,6 +38,7 @@ export const theme = {
 				primary: '#2E2F31',
 				secondary: '#F0CC10',
 			},
+			overlay: '#28292A',
 			gradient:
 				'radial-gradient(50% 50% at 50% 50%, #2F3137 0%, #1A1B1F 100%);',
 		},
