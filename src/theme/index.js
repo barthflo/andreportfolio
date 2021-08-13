@@ -2,12 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 
 const Global = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Montserrat&family=Nunito:wght@200;600&family=Raleway:wght@300;600&display=swap');
+
 body {
     margin : 0;
     padding : 0;
     box-sizing : border-box;
     background: #1D1E20;
 	color: white;
+	scroll-behavior : smooth;
+
 }
 a {
     text-decoration : none;
