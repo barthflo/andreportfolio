@@ -1,16 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
 const Global = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Montserrat&family=Nunito:wght@200;600&family=Raleway:wght@300;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&family=Montserrat&family=Nunito:wght@200;400;600&family=Raleway:wght@300;600&display=swap');
 
-body {
+* {
     margin : 0;
     padding : 0;
     box-sizing : border-box;
-    background: #1D1E20;
-	color: white;
 	scroll-behavior : smooth;
-
+}
+body{
+	background: #1D1E20;
+	color: white;
 }
 a {
     text-decoration : none;
@@ -28,11 +29,12 @@ export const theme = {
 	name: 'main',
 	animated: {
 		loader: 'https://media.giphy.com/media/SAHqdcXlBISVbes9nj/giphy.gif',
-		menu: 'https://media.giphy.com/media/fuDoZKKdU3RaVHHmse/giphy.gif',
+		// menu: 'https://media.giphy.com/media/fuDoZKKdU3RaVHHmse/giphy.gif',
+		menu: process.env.PUBLIC_URL + '/clappergif.gif',
 	},
 	palette: {
 		action: {
-			hover: '#F0CC10',
+			hover: '#8429B5',
 			active: '#F0CC10',
 		},
 		background: {
@@ -42,7 +44,7 @@ export const theme = {
 				primary: '#2E2F31',
 				secondary: '#F0CC10',
 			},
-			overlay: '#28292A',
+			overlay: '#2d2f30',
 			gradient:
 				'radial-gradient(50% 50% at 50% 50%, #2F3137 0%, #1A1B1F 100%);',
 		},

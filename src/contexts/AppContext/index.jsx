@@ -23,9 +23,6 @@ const AppProvider = ({ children }) => {
 			actions.getSingleFilmography(dispatch);
 			return;
 		}
-		// if (pathname === '/404') {
-		// 	actions.initialize(dispatch);
-		// }
 		return () => clearTimeout(timeout);
 		//eslint-disable-next-line
 	}, []);

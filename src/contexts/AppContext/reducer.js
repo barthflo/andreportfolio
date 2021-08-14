@@ -4,6 +4,7 @@ export const initialState = {
 	home: null,
 	filmographyList: null,
 	filmographyItem: null,
+	siteSettings: null,
 	error: null,
 	initialized: false,
 };
@@ -14,6 +15,7 @@ export const reducer = (state, action) => {
 		case 'INITIALIZE':
 			return {
 				...state,
+				siteSettings: payload,
 				initialized: true,
 			};
 		case 'GET_HOME_DATAS':
@@ -21,6 +23,10 @@ export const reducer = (state, action) => {
 				...state,
 				home: payload,
 				initialized: true,
+				siteSettings: {
+					siteTitle: 'Andre Fonsecca',
+					siteSubtitle: 'Filmmaker',
+				},
 			};
 		case 'GET_MULTIPLE_FILMOGRAPHY':
 			return {
@@ -49,6 +55,10 @@ export const actions = {
 	initialize: (dispatch) => {
 		dispatch({
 			type: 'INITIALIZE',
+			payload: {
+				siteTitle: 'Andre Fonsecca',
+				siteSubtitle: 'Filmmaker',
+			},
 		});
 	},
 	getHomePageDatas: async (dispatch) => {

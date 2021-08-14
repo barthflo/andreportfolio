@@ -3,7 +3,14 @@ import { AppContext } from '../contexts/AppContext';
 
 const useAppContext = () => {
 	const {
-		state: { home, filmographyList, filmographyItem, error, initialized },
+		state: {
+			home,
+			filmographyList,
+			filmographyItem,
+			siteSettings,
+			error,
+			initialized,
+		},
 		dispatch,
 		actions,
 	} = useContext(AppContext);
@@ -11,6 +18,7 @@ const useAppContext = () => {
 		home,
 		filmographyList,
 		filmographyItem,
+		siteSettings,
 		error,
 		initialized,
 		dispatch,

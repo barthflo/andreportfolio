@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import useAppContext from '../../hooks/useAppContext';
 import Loading from '../../components/Loading';
-
+import Page from '../../components/Page';
 const HomeView = () => {
 	const { home, actions, dispatch } = useAppContext();
 
@@ -14,22 +14,18 @@ const HomeView = () => {
 	}, [home, actions, dispatch]);
 
 	return (
-		<div>
+		<Page
+			title="Andre Fonsecca - Filmmaker"
+			description="Home page of the portfolio of Andre Fonsecca Filmmaker. Andre Fonsecca is an aspiring writter and director"
+		>
 			{!home ? (
-				<div
-					style={{
-						width: '100vw',
-						height: '80vh',
-						marginTop: '20vh',
-						position: 'relative',
-					}}
-				>
-					<Loading />
+				<div style={{ zIndex: 2000 }}>
+					<Loading />{' '}
 				</div>
 			) : (
-				home.title
+				<p>{home.title}</p>
 			)}
-		</div>
+		</Page>
 	);
 };
 
