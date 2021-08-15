@@ -5,28 +5,46 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { RiStarSFill } from 'react-icons/ri';
 
-const MenuItems = ({ items }) => {
+const MenuItems = ({ items, onClick }) => {
 	const { pathname, hash } = useLocation();
 	const currentRoute = pathname + hash;
+
+	const renderActiveItem = (item, path) => {
+		item.active = false;
+		const element = document.getElementById(item.label.toLowerCase());
+
+		if (element) {
+			const { y, height } = element.getBoundingClientRect();
+			if (y <= 0) {
+				item.active = true;
+			}
+			if (y + height <= 0) {
+				item.active = false;
+			}
+			return;
+		}
+
+		if (currentRoute === path) {
+			item.active = true;
+			return;
+		}
+
+		if (currentRoute.includes('/filmography') && path.includes('filmography')) {
+			item.active = true;
+			return;
+		}
+	};
 
 	return (
 		<List>
 			{items.map((item, index) => {
 				const { path, label } = item;
-				item.active = false;
-				if (currentRoute === path) {
-					item.active = true;
-				}
-				if (
-					currentRoute.includes('/filmography') &&
-					path.includes('filmography')
-				) {
-					item.active = true;
-				}
+				renderActiveItem(item, path);
+
 				return (
 					<Container key={index}>
 						{item.active && <Star />}
-						<Item active={item.active}>
+						<Item active={item.active} onClick={onClick}>
 							<Link to={path}>{label}</Link>
 						</Item>
 						{item.active && <Star />}
@@ -68,6 +86,7 @@ const Star = styled(RiStarSFill)`
 	color: ${(props) => props.theme.palette.action.active};
 	font-size: 8px;
 `;
+
 const Item = styled.span`
 	font-family: ${(props) => props.theme.typography.menu.items};
 	color: ${(props) =>
@@ -77,6 +96,8 @@ const Item = styled.span`
 	font-size: 20px;
 	font-weight: 400;
 	margin: 0 5px;
+	transition: 0.2s ease-in;
+
 	&:hover {
 		color: ${(props) => !props.active && props.theme.palette.action.hover};
 		transition: 0.2s ease-in;
@@ -85,6 +106,7 @@ const Item = styled.span`
 
 MenuItems.propTypes = {
 	items: PropTypes.array.isRequired,
+	onClick: PropTypes.func,
 };
 
 export default MenuItems;

@@ -11,14 +11,14 @@ function App() {
 	if (error && error.status === 404) return <Redirect to="/404" />;
 
 	return (
-		<div className="App">
+		<>
 			{!initialized && (
 				<LoaderWrapper>
 					<Loading />
 				</LoaderWrapper>
 			)}
 			<RenderRoutes routes={routes} />
-		</div>
+		</>
 	);
 }
 

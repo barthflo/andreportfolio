@@ -4,7 +4,7 @@ import Menu from './MenuItems';
 import PropTypes from 'prop-types';
 import { RiStarSFill } from 'react-icons/ri';
 
-const SideBar = ({ menuItems, open }) => {
+const SideBar = ({ menuItems, open, onClick }) => {
 	return (
 		<Container open={open}>
 			<ImageContainer>
@@ -16,7 +16,7 @@ const SideBar = ({ menuItems, open }) => {
 				</StarsContainer>
 			</ImageContainer>
 
-			<Menu items={menuItems} />
+			<Menu items={menuItems} onClick={onClick} />
 			<StarsContainer>
 				<Star />
 				<Star />

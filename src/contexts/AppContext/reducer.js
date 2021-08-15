@@ -22,17 +22,11 @@ export const reducer = (state, action) => {
 			return {
 				...state,
 				home: payload,
-				initialized: true,
-				siteSettings: {
-					siteTitle: 'Andre Fonsecca',
-					siteSubtitle: 'Filmmaker',
-				},
 			};
 		case 'GET_MULTIPLE_FILMOGRAPHY':
 			return {
 				...state,
 				filmographyList: payload,
-				initialized: true,
 			};
 		case 'GET_SINGLE_FILMOGRAPHY':
 			return {
@@ -58,6 +52,9 @@ export const actions = {
 			payload: {
 				siteTitle: 'Andre Fonsecca',
 				siteSubtitle: 'Filmmaker',
+				userName: 'Andre Fonsecca',
+				userEmail: 'andresalgadofonsecca@protonmail.com',
+				userPhone: '07438384551',
 			},
 		});
 	},

@@ -19,11 +19,20 @@ const HomeView = () => {
 			description="Home page of the portfolio of Andre Fonsecca Filmmaker. Andre Fonsecca is an aspiring writter and director"
 		>
 			{!home ? (
-				<div style={{ zIndex: 2000 }}>
-					<Loading />{' '}
+				<div style={{ zIndex: -1 }}>
+					<Loading />
 				</div>
 			) : (
-				<p>{home.title}</p>
+				<>
+					<p>{home.title}</p>
+					<div style={{ height: '100vh' }}>Image</div>
+					<div id="about" style={{ height: '100vh', paddingTop: 70 }}>
+						About
+					</div>
+					<div id="filmography" style={{ height: '100vh', paddingTop: 70 }}>
+						Filmo
+					</div>
+				</>
 			)}
 		</Page>
 	);

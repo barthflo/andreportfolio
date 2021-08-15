@@ -73,5 +73,8 @@ export const theme = {
 		md: '1024px',
 		lg: '1440px',
 	},
-	shadows: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+	shadows: {
+		bottom: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+		top: '0px -4px 4px rgba(0, 0, 0, 0.25)',
+	},
 };

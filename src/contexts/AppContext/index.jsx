@@ -1,4 +1,9 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import React, {
+	createContext,
+	useEffect,
+	useReducer,
+	useCallback,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import { reducer, actions, initialState } from './reducer';
 
@@ -9,19 +14,33 @@ const AppProvider = ({ children }) => {
 
 	const [state, dispatch] = useReducer(reducer, initialState);
 
+	const homeInit = useCallback(async () => {
+		await actions.getHomePageDatas(dispatch);
+		actions.initialize(dispatch);
+	}, [dispatch]);
+
+	const filmoListInit = useCallback(async () => {
+		await actions.getMultipleFilmography(dispatch);
+		actions.initialize(dispatch);
+	}, [dispatch]);
+
+	const filmoDetailInit = useCallback(async () => {
+		await actions.getSingleFilmography(dispatch);
+		actions.initialize(dispatch);
+	}, [dispatch]);
+
 	useEffect(() => {
 		let timeout;
 		if (pathname === '/') {
-			timeout = setTimeout(() => actions.getHomePageDatas(dispatch), 2000);
-			return;
+			timeout = setTimeout(() => {
+				homeInit();
+			}, 2000);
 		}
 		if (pathname === '/filmography') {
-			actions.getMultipleFilmography(dispatch);
-			return;
+			filmoListInit();
 		}
 		if (pathname.match(/filmography/gi)) {
-			actions.getSingleFilmography(dispatch);
-			return;
+			filmoDetailInit();
 		}
 		return () => clearTimeout(timeout);
 		//eslint-disable-next-line

@@ -5,6 +5,7 @@ import styled, { ThemeContext } from 'styled-components';
 import useWindowDimensions from '../../../../hooks/useWindowDimensions';
 import Menu from './MenuItems';
 import SideBar from './SideBar';
+import PropTypes from 'prop-types';
 
 const menuItems = [
 	{
@@ -25,7 +26,7 @@ const menuItems = [
 	},
 ];
 
-const TopBar = () => {
+const TopBar = ({ showTopBar }) => {
 	const { siteSettings } = useAppContext();
 	const [loading, setLoading] = useState(true);
 	const { width } = useWindowDimensions();
@@ -43,16 +44,30 @@ const TopBar = () => {
 	}, [siteSettings]);
 
 	return (
-		<Container>
+		<Container showTopBar={showTopBar}>
 			{!loading && (
 				<>
-					<Title to="/">{siteSettings.siteTitle.toUpperCase()}</Title>
+					<Title
+						to="/"
+						onClick={() => {
+							setOpen(false);
+							window.scrollTo(0, 0);
+						}}
+						title="Return to top of home page"
+					>
+						{siteSettings.siteTitle.toUpperCase()}
+					</Title>
 					{width < Number(breakpoints.sm.replace('px', '')) ? (
 						<>
 							<BurgerContainer onClick={handleClick}>
 								<Burger open={open} />
 							</BurgerContainer>
-							<SideBar menuItems={menuItems} open={open} />
+							<Touch open={open} onClick={handleClick} />
+							<SideBar
+								menuItems={menuItems}
+								open={open}
+								onClick={handleClick}
+							/>
 						</>
 					) : (
 						<Menu items={menuItems} />
@@ -63,20 +78,23 @@ const TopBar = () => {
 	);
 };
 
-const Container = styled.div`
+const Container = styled.header`
 	position: fixed;
 	top: 0;
 	left: 0;
 	background: ${(props) => props.theme.palette.background.surface.primary};
-	box-shadow: ${(props) => props.theme.shadows};
+	box-shadow: ${(props) => props.theme.shadows.bottom};
 	border-bottom: 1px solid ${(props) => props.theme.palette.border};
 	z-index: 1000;
 	height: 70px;
 	width: 100vw;
 	padding: 20px;
 	display: flex;
+	visibility: ${(props) => (props.showTopBar ? 'visible' : 'collapse')}
+	opacity: ${(props) => (props.showTopBar ? '1' : '0')}
 	justify-content: space-between;
 	align-items: center;
+	transition: 0.2s ease-in-out;
 `;
 
 const Title = styled(Link)`
@@ -129,4 +147,16 @@ const Burger = styled.span`
 	}
 `;
 
+const Touch = styled.div`
+	display: ${(props) => (props.open ? 'block' : 'none')};
+	position: fixed;
+	top: 70px;
+	left: 0;
+	width: 100vw;
+	height: calc(100vh - 70px);
+`;
+
+TopBar.propTypes = {
+	showTopBar: PropTypes.bool.isRequired,
+};
 export default TopBar;
