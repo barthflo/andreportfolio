@@ -71,7 +71,7 @@ export const theme = {
 	breakpoints: {
 		sm: '768px',
 		md: '1024px',
-		lg: '1440px',
+		lg: '1441px',
 	},
 	shadows: {
 		bottom: '0px 4px 4px rgba(0, 0, 0, 0.25)',

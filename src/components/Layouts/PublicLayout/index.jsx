@@ -32,8 +32,10 @@ const Wrapper = styled.div`
 	min-height: 100vh;
 	width: 100vw;
 `;
+
 const Main = styled.main`
 	margin-top: ${(props) => props.margin && '70px'};
+	width: inherit;
 `;
 
 PublicLayout.propTypes = {

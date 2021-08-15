@@ -95,6 +95,12 @@ const Container = styled.header`
 	justify-content: space-between;
 	align-items: center;
 	transition: 0.2s ease-in-out;
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		padding: 20px 105px;
+	} ;
+	@media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+		padding: 20px 210px;
+	} ;
 `;
 
 const Title = styled(Link)`

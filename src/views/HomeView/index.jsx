@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import useAppContext from '../../hooks/useAppContext';
 import Loading from '../../components/Loading';
 import Page from '../../components/Page';
+import Section from '../../components/Section';
+
 const HomeView = () => {
 	const { home, actions, dispatch } = useAppContext();
 
@@ -24,14 +26,16 @@ const HomeView = () => {
 				</div>
 			) : (
 				<>
-					<p>{home.title}</p>
-					<div style={{ height: '100vh' }}>Image</div>
-					<div id="about" style={{ height: '100vh', paddingTop: 70 }}>
-						About
-					</div>
-					<div id="filmography" style={{ height: '100vh', paddingTop: 70 }}>
-						Filmo
-					</div>
+					<Section>
+						<div style={{ height: '100vh' }}>Image</div>
+					</Section>
+
+					<Section id="about" light>
+						<div style={{ height: '100vh', paddingTop: 70 }}>About</div>
+					</Section>
+					<Section id="filmography">
+						<div style={{ height: '100vh', paddingTop: 70 }}>Filmo</div>
+					</Section>
 				</>
 			)}
 		</Page>
