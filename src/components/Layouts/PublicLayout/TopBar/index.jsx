@@ -136,7 +136,7 @@ const Burger = styled.span`
 	}
 	&:before {
 		top: 15px;
-		height: ${(props) => (props.open ? '2px' : '3px')};
+		height: 2px;
 		transform: ${(props) => props.open && 'rotateZ(-90deg) translate(14px, 0)'};
 		transition: .2s ease-in
 	}
