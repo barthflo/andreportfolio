@@ -1,0 +1,4 @@
+.env
+.netlify
+build
+node_modules/

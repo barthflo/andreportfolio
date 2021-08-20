@@ -1,0 +1,14 @@
+[[header]]
+  for = "/api/*"
+  [header.value]
+    Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://andreapi.herokuapp.com/api/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    Access-Control-Allow-Origin = "*"
+
+
