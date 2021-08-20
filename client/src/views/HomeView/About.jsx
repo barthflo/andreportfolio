@@ -114,7 +114,7 @@ const ImageContainer = styled.figure`
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 		padding-top: unset;
 		width: 40%;
-		height: 100%;
+		height: 98%;
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
 		width: 35%;

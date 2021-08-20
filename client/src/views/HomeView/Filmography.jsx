@@ -28,7 +28,7 @@ const Filmography = () => {
 					document.getElementById('profilePic').getBoundingClientRect().height -
 					200;
 			} else {
-				height = 30;
+				height = 0;
 			}
 			setPaddingTop(height);
 		}
@@ -36,7 +36,7 @@ const Filmography = () => {
 
 	return (
 		<Wrapper padding={paddingTop}>
-			<StarContainer id="filmography">
+			<StarContainer>
 				<Star />
 			</StarContainer>
 			<h2>Filmography</h2>

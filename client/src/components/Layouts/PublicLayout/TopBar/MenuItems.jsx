@@ -12,15 +12,15 @@ const MenuItems = ({ items, onClick }) => {
 	const renderActiveItem = (item, path) => {
 		item.active = false;
 		const element = document.getElementById(item.label.toLowerCase());
-
 		if (element) {
 			const { y, height } = element.getBoundingClientRect();
 			if (y <= 70) {
 				item.active = true;
 			}
-			if (y + height <= 0) {
+			if (y + height <= 70) {
 				item.active = false;
 			}
+
 			return;
 		}
 

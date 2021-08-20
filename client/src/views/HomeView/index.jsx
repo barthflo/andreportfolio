@@ -21,6 +21,13 @@ const sections = [
 	{
 		component: <Filmography />,
 		height: '100vh',
+		id: 'filmography',
+	},
+	{
+		component: <Filmography />,
+		height: '100vh',
+		id: 'skills',
+		light: true,
 	},
 ];
 
