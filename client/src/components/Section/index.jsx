@@ -11,12 +11,15 @@ const Section = ({ children, light, id, height }) => {
 };
 
 const Container = styled.section`
-    width: 100%;
+	width: 100%;
 	height: ${(props) => props.height};
 	position: relative;
-    background: ${(props) =>
-			props.light && props.theme.palette.background.paper};
-	color: ${(props) => props.light && props.theme.palette.text.secondary.dark}
+	background: ${(props) => props.light && props.theme.palette.background.paper};
+	color: ${(props) =>
+		props.light
+			? props.theme.palette.text.secondary.dark
+			: props.theme.palette.text.secondary.light};
+	font-family: ${(props) => props.theme.typography.main};
 	padding: 0 13px;
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 		padding: 0 20px;
