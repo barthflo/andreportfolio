@@ -32,7 +32,7 @@ const Footer = () => {
 };
 
 const Container = styled.footer`
-	background: ${(props) => props.theme.palette.background.surface.primary};
+	background: ${(props) => props.theme.palette.background.default};
 	color: ${(props) => props.theme.palette.text.secondary.light};
 	font-family: ${(props) => props.theme.typography.main};
 	font-weight: 300;

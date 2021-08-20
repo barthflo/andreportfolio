@@ -48,8 +48,6 @@ const AppProvider = ({ children }) => {
 		}
 	}, [pathname]);
 
-	console.log(state);
-	console.log(process.env);
 	return (
 		<AppContext.Provider value={{ state, dispatch, actions }}>
 			{children}
