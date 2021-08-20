@@ -69,6 +69,7 @@ export const theme = {
 		main: 'Raleway, sans-serif',
 	},
 	breakpoints: {
+		xs: '500px',
 		sm: '768px',
 		md: '1024px',
 		lg: '1441px',

@@ -84,7 +84,6 @@ const Container = styled.header`
 	left: 0;
 	background: ${(props) => props.theme.palette.background.surface.primary};
 	box-shadow: ${(props) => props.theme.shadows.bottom};
-	border-bottom: 1px solid ${(props) => props.theme.palette.border};
 	z-index: 1000;
 	height: 70px;
 	width: 100vw;

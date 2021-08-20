@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useAppContext from '../../hooks/useAppContext';
+import styled from 'styled-components';
+import { RiStarSFill } from 'react-icons/ri';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 const About = () => {
 	const [loading, setLoading] = useState(true);
+	const { width } = useWindowDimensions();
 	const {
 		siteSettings,
 		home: { about },
@@ -15,21 +19,137 @@ const About = () => {
 	}, [siteSettings]);
 
 	return (
-		<div style={{ paddingTop: 70, paddingBottom: 70 }}>
-			<h2>About</h2>
+		<Wrapper>
+			<StarContainer>
+				<Star />
+			</StarContainer>
+			{width < 768 && <h2>About Me</h2>}
 
 			{!loading && (
-				<div style={{ display: 'flex' }}>
-					<img
-						src={about.profilePic}
-						alt={`Portrait of ${siteSettings.userName} `}
-						style={{ width: 200, height: 400, objectFit: 'cover' }}
-					/>
-					<p>{about.content}</p>
-				</div>
+				<Container>
+					<ImageContainer id="profilePic">
+						<Image
+							src={about.profilePic}
+							alt={`Portrait of ${siteSettings.userName} `}
+						/>
+					</ImageContainer>
+
+					<Content>
+						{width >= 768 && <h2>About Me</h2>}
+						<p>{about.content}</p>
+					</Content>
+				</Container>
 			)}
-		</div>
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled.div`
+	padding: 70px 0 200px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-weight: 300;
+	& h2 {
+		font-weight: 600;
+		margin-bottom: 25px;
+		font-style: capitalize;
+		font-size: 36px;
+		@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+			font-size: 48px;
+		}
+		@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+			font-size: 56px;
+		}
+	}
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		padding: 70px 0;
+	}
+	,
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		padding: 90px 0;
+	}
+`;
+
+const StarContainer = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		height: 90px;
+	}
+`;
+
+const Star = styled(RiStarSFill)`
+	font-size: 20px;
+	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
+		font-size: 25px;
+	}
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		font-size: 36px;
+	}
+`;
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column-reverse;
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		flex-direction: row;
+	}
+`;
+
+const ImageContainer = styled.figure`
+	position: absolute;
+	width: 100%;
+	padding-top: 100%;
+	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
+		padding-top: 350px;
+	}
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		padding-top: unset;
+		width: 40%;
+		height: 100%;
+	}
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		width: 35%;
+		padding-right: 100px;
+	}
+`;
+
+const Image = styled.img`
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border: 10px solid ${(props) => props.theme.palette.background.paper};
+	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
+		object-position: 0 -100px;
+	}
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		object-position: center;
+	}
+`;
+
+const Content = styled.div`
+	text-align: justify;
+	margin-bottom: 10px;
+	font-size: 18px;
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		width: 60%;
+		margin-left: 40%;
+		padding-left: 20px;
+	}
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		width: 65%;
+		margin-left: 35%;
+		padding-left: 100px;
+	}
+`;
 
 export default About;

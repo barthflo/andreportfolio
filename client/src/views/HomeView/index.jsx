@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import useAppContext from '../../hooks/useAppContext';
 import Loading from '../../components/Loading';
 import Page from '../../components/Page';
 import Section from '../../components/Section';
 import Intro from './Intro';
 import About from './About';
+import Filmography from './Filmography';
 
 const sections = [
 	{
@@ -15,6 +17,10 @@ const sections = [
 		component: <About />,
 		id: 'about',
 		light: true,
+	},
+	{
+		component: <Filmography />,
+		height: '100vh',
 	},
 ];
 
@@ -35,35 +41,27 @@ const HomeView = () => {
 			description="Home page of the portfolio of Andre Fonsecca Filmmaker. Andre Fonsecca is an aspiring writer and director"
 		>
 			{!home ? (
-				<div style={{ zIndex: -1 }}>
+				<LoadingWrapper style={{ zIndex: -1 }}>
 					<Loading />
-				</div>
+				</LoadingWrapper>
 			) : (
 				sections.map((section, index) => (
 					<Section
-						id={section.id && section.id}
-						light={section.light && section.light}
+						id={section.id}
+						light={section.light}
 						height={section.height}
 						key={index}
 					>
 						{section.component}
 					</Section>
 				))
-				// <>
-				// 	<Section>
-				// 		<div style={{ height: '100vh' }}>Image</div>
-				// 	</Section>
-
-				// 	<Section id="about" light>
-				// 		<div style={{ height: '100vh', paddingTop: 70 }}>About</div>
-				// 	</Section>
-				// 	<Section id="filmography">
-				// 		<div style={{ height: '100vh', paddingTop: 70 }}>Filmo</div>
-				// 	</Section>
-				// </>
 			)}
 		</Page>
 	);
 };
+
+const LoadingWrapper = styled.div`
+	z-index: -1;
+`;
 
 export default HomeView;
