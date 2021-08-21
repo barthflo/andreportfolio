@@ -5,6 +5,7 @@ const FilmographyDetailView = ({
 		params: { slug },
 	},
 }) => {
+	window.scrollTo(0, 0);
 	return <div>Filmo Detail : {slug.split('-').join(' ').toUpperCase()}</div>;
 };
 
