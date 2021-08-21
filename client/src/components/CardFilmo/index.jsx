@@ -21,7 +21,7 @@ const CardFilmo = ({ film }) => {
 					<Image src={picture} alt={`Picture frame from the movie ${title}`} />
 				</ImageContainer>
 			</Link>
-			<CardInfosContainer overflow={overflow}>
+			<CardInfosContainer $overflow={Boolean(overflow)}>
 				<Link to={`/filmography/${film.title.toLowerCase()}`}>
 					<Title heading={3}>
 						{title} ({date})
@@ -62,8 +62,8 @@ const Image = styled.img`
 const CardInfosContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: ${(props) => (props.overflow ? 'start' : 'space-around')};
-	overflow: ${(props) => props.overflow && 'scroll'};
+	justify-content: ${(props) => (props.$overflow ? 'start' : 'space-around')};
+	overflow: ${(props) => props.$overflow && 'scroll'};
 	padding: 20px;
 	align-items: center;
 	background: ${(props) => props.theme.palette.background.surface.primary};
