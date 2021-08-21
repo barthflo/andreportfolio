@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { HashLink } from 'react-router-hash-link';
 import useAppContext from '../../hooks/useAppContext';
 import styled from 'styled-components';
 import { RiStarSFill } from 'react-icons/ri';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import CardFilmo from '../../components/CardFilmo';
 
 const Filmography = () => {
 	const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const Filmography = () => {
 
 	const {
 		siteSettings,
-		// home: { filmography },
+		home: { filmography },
 	} = useAppContext();
 
 	useEffect(() => {
@@ -41,13 +43,22 @@ const Filmography = () => {
 			</StarContainer>
 			<h2>Filmography</h2>
 
-			{!loading && <Container></Container>}
+			{!loading && (
+				<Container>
+					{filmography.map((film) => (
+						<CardWrapper key={film.id}>
+							<CardFilmo film={film} />
+						</CardWrapper>
+					))}
+				</Container>
+			)}
+			<Link to="/filmography">See all filmography</Link>
 		</Wrapper>
 	);
 };
 
 const Wrapper = styled.div`
-	padding: ${(props) => props.padding}px 0 70px 0;
+	padding: ${(props) => props.padding}px 0 30px 0;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -55,7 +66,7 @@ const Wrapper = styled.div`
 	font-weight: 300;
 	& h2 {
 		font-weight: 600;
-		margin-bottom: 25px;
+		margin-bottom: 45px;
 		font-style: capitalize;
 		font-size: 36px;
 		@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
@@ -86,8 +97,29 @@ const Star = styled(RiStarSFill)`
 `;
 
 const Container = styled.div`
+	width: 100%;
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 20px;
+`;
+
+const CardWrapper = styled.div`
+	width: 350px;
+	flex-grow: 1;
+`;
+
+const Link = styled(HashLink)`
+	font-size: 12px;
+	font-style: italic;
+	align-self: flex-end;
+	margin-top: 10px;
+	cursor: pointer;
+	transition: 0.2s ease-in;
+	&:hover {
+		color: ${(props) => props.theme.palette.action.hover};
+		transition: 0.2s ease-in;
+	}
 `;
 
 export default Filmography;

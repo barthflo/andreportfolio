@@ -70,7 +70,7 @@ export const actions = {
 			} = await axios.get(`/api/about?category=about&size=large`);
 			const {
 				data: { filmography },
-			} = await axios.get(`/api/filmography?limit=6`);
+			} = await axios.get(`/api/filmography?limit=3`);
 
 			dispatch({
 				type: 'GET_HOME_DATAS',

@@ -7,6 +7,7 @@ import Section from '../../components/Section';
 import Intro from './Intro';
 import About from './About';
 import Filmography from './Filmography';
+import Skills from './Skills';
 
 const sections = [
 	{
@@ -20,11 +21,10 @@ const sections = [
 	},
 	{
 		component: <Filmography />,
-		height: '100vh',
 		id: 'filmography',
 	},
 	{
-		component: <Filmography />,
+		component: <Skills />,
 		height: '100vh',
 		id: 'skills',
 		light: true,
@@ -44,11 +44,11 @@ const HomeView = () => {
 	}
 	return (
 		<Page
-			title="Andre Fonsecca - Filmmaker"
-			description="Home page of the portfolio of Andre Fonsecca Filmmaker. Andre Fonsecca is an aspiring writer and director"
+			title="Andre Fonseca - Filmmaker"
+			description="Home page of the portfolio of Andre Salgado Fonseca,filmmaker. Andre Fonsecca is an aspiring writer and director"
 		>
 			{!home ? (
-				<LoadingWrapper style={{ zIndex: -1 }}>
+				<LoadingWrapper>
 					<Loading />
 				</LoadingWrapper>
 			) : (
