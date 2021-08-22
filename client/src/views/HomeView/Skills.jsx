@@ -20,8 +20,6 @@ const Skills = () => {
 		});
 	};
 
-	console.log(skills);
-
 	return (
 		<Wrapper>
 			<StarContainer>
