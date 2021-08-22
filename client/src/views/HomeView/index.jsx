@@ -25,7 +25,6 @@ const sections = [
 	},
 	{
 		component: <Skills />,
-		height: '100vh',
 		id: 'skills',
 		light: true,
 	},

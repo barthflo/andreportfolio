@@ -21,6 +21,9 @@ const Container = styled.section`
 			: props.theme.palette.text.secondary.light};
 	font-family: ${(props) => props.theme.typography.main};
 	padding: 0 13px;
+	& p {
+		font-size: 16px;
+	}
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 		padding: 0 20px;
 	}

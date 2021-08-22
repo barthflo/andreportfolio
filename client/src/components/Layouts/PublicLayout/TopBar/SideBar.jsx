@@ -40,6 +40,7 @@ const Container = styled.aside`
 	justify-content: start;
 	padding-top: 48px;
 	transition: 0.2s ease-in-out;
+	overflow: auto;
 `;
 
 const ImageContainer = styled.div`

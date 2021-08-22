@@ -43,15 +43,13 @@ const Filmography = () => {
 			</StarContainer>
 			<h2>Filmography</h2>
 
-			{!loading && (
-				<Container>
-					{filmography.map((film) => (
-						<CardWrapper key={film.id}>
-							<CardFilmo film={film} />
-						</CardWrapper>
-					))}
-				</Container>
-			)}
+			<Container>
+				{filmography.map((film) => (
+					<CardWrapper key={film.id}>
+						<CardFilmo film={film} heading="h3" />
+					</CardWrapper>
+				))}
+			</Container>
 			<Link to="/filmography">See all filmography</Link>
 		</Wrapper>
 	);
@@ -80,7 +78,7 @@ const Wrapper = styled.div`
 
 const StarContainer = styled.div`
 	width: 100%;
-	height: 70px;
+	height: 10vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;

@@ -45,7 +45,7 @@ const About = () => {
 };
 
 const Wrapper = styled.div`
-	padding: 70px 0 200px;
+	padding: 10vh 0 200px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -64,11 +64,7 @@ const Wrapper = styled.div`
 		}
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-		padding: 70px 0;
-	}
-	,
-	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-		padding: 90px 0;
+		padding: 10vh 0;
 	}
 `;
 
@@ -77,13 +73,10 @@ const StarContainer = styled.div`
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 70px;
+	height: 10vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
-		height: 90px;
-	}
 `;
 
 const Star = styled(RiStarSFill)`

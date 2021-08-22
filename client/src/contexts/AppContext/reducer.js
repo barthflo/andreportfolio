@@ -71,13 +71,17 @@ export const actions = {
 			const {
 				data: { filmography },
 			} = await axios.get(`/api/filmography?limit=3`);
-
+			const {
+				data: { skills, cv },
+			} = await axios.get('/api/skills?category=cv');
 			dispatch({
 				type: 'GET_HOME_DATAS',
 				payload: {
 					video,
 					about,
 					filmography,
+					skills,
+					cv,
 				},
 			});
 		} catch (err) {

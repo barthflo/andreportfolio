@@ -22,6 +22,10 @@ ul, li {
     padding : 0;
     list-style-type: none;
 }
+button:focus-visible, a:focus-visible, figure:focus-visible , img:focus-visible {
+	outline : auto;
+	padding: 5px;
+}
 `;
 export default Global;
 
