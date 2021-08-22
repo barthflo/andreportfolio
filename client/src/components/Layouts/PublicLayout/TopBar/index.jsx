@@ -114,7 +114,9 @@ const Title = styled(Link)`
 	}
 `;
 
-const BurgerContainer = styled.div`
+const BurgerContainer = styled.button`
+	border: none;
+	background: none;
 	position: relative;
 	width: 25px;
 	height: 20px;
@@ -126,6 +128,7 @@ const BurgerContainer = styled.div`
 const Burger = styled.span`
 	position: absolute;
 	top: 0;
+	right: 0;
 	width: 25px;
 	height: 2px;
 	background: ${(props) => props.theme.palette.text.secondary.light};

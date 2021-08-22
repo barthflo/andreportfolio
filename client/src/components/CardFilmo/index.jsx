@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { HashLink as Link } from 'react-router-hash-link';
 
-const CardFilmo = ({ film }) => {
+const CardFilmo = ({ film, heading }) => {
 	const [overflow, setOverflow] = useState(false);
 	const { urls, title, date, synopsis } = film;
 	// eslint-disable-next-line array-callback-return
@@ -23,7 +23,7 @@ const CardFilmo = ({ film }) => {
 			</Link>
 			<CardInfosContainer $overflow={Boolean(overflow)}>
 				<Link to={`/filmography/${film.title.toLowerCase()}`}>
-					<Title heading={3}>
+					<Title as={heading}>
 						{title} ({date})
 					</Title>
 				</Link>
@@ -72,7 +72,7 @@ const CardInfosContainer = styled.div`
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 `;
 
-const Title = styled.h3`
+const Title = styled.div`
 	font-weight: 600;
 	font-size: 20px;
 	margin-bottom: 16px;
@@ -87,11 +87,14 @@ const Title = styled.h3`
 
 const Description = styled.p`
 	font-weight: 300;
-	font-size: 14px;
+	font-size: 14px !important;
 	text-align: justify;
 `;
 
-const Button = styled.span`
+const Button = styled.button`
+	background: none;
+	border: none;
+	color: ${(props) => props.theme.palette.text.secondary.light}
 	font-size: 12px;
 	font-style: italic;
 	align-self: flex-end;
@@ -106,6 +109,7 @@ const Button = styled.span`
 
 CardFilmo.propTypes = {
 	film: PropTypes.object.isRequired,
+	heading: PropTypes.string.isRequired,
 };
 
 export default CardFilmo;
