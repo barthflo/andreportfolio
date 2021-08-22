@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useAppContext from './hooks/useAppContext';
-import { Redirect } from 'react-router';
 import RenderRoutes, { routes } from './components/RenderRoutes';
 import Loading from './components/Loading';
 
 function App() {
-	const { error, initialized } = useAppContext();
-
-	if (error && error.status === 404) return <Redirect to="/404" />;
+	const { initialized, error } = useAppContext();
 
 	return (
 		<>
-			{!initialized && (
+			{!initialized && !error && (
 				<LoaderWrapper>
 					<Loading />
 				</LoaderWrapper>

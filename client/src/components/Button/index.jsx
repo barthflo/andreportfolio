@@ -13,6 +13,7 @@ const BasedButton = ({
 	as,
 	target,
 	download,
+	disabled,
 }) => {
 	return (
 		<Button
@@ -25,6 +26,7 @@ const BasedButton = ({
 			as={as}
 			href={target}
 			download={download}
+			disabled={disabled}
 			target="__blank"
 		>
 			{label}
@@ -40,15 +42,20 @@ const Button = styled.button`
 			props.dark
 				? props.theme.palette.text.secondary.light
 				: props.theme.palette.text.secondary.dark};
-    background : ${(props) =>
-			props.variant === 'primary'
-				? props.theme.palette.background.surface.secondary
-				: 'none'}
+    background : ${(props) => {
+			if (props.disabled) {
+				return '#55544f';
+			} else if (props.variant === 'primary') {
+				return props.theme.palette.background.surface.secondary;
+			} else {
+				return 'none';
+			}
+		}}
     padding : 7px;
     min-width: 230px;
     font-family : ${(props) => props.theme.typography.main};
     font-size: 16px;
-    cursor: pointer;
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
     box-shadow : ${(props) => props.theme.shadows.bottom};
 	text-align: center;
 
