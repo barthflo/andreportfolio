@@ -36,7 +36,7 @@ const AppProvider = ({ children }) => {
 		if (pathname === '/filmography') {
 			filmoListInit();
 		}
-		if (pathname.match(/filmography/gi)) {
+		if (pathname.match(/filmography/gi) && pathname !== '/filmography') {
 			filmoDetailInit();
 		}
 		//eslint-disable-next-line

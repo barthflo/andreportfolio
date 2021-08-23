@@ -55,7 +55,7 @@ const HomeView = () => {
 
 	return (
 		<Page
-			title="Andre Fonseca - Filmmaker"
+			title="Andre Fonseca - Filmmaker - Home"
 			description="Home page of the portfolio of Andre Salgado Fonseca,filmmaker. Andre Fonsecca is an aspiring writer and director"
 		>
 			{!home ? (
