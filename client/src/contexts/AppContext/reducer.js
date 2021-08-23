@@ -93,12 +93,22 @@ export const actions = {
 		}
 	},
 	getMultipleFilmography: async (dispatch) => {
-		const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-		const { data } = res;
-		dispatch({
-			type: 'GET_MULTIPLE_FILMOGRAPHY',
-			payload: data,
-		});
+		try {
+			const res = await axios.get('/api/filmography');
+			const {
+				data: { filmography },
+			} = res;
+			dispatch({
+				type: 'GET_MULTIPLE_FILMOGRAPHY',
+				payload: filmography,
+			});
+		} catch (err) {
+			console.error(err);
+			dispatch({
+				type: 'ERROR',
+				payload: err.response,
+			});
+		}
 	},
 	getSingleFilmography: async (dispatch) => {
 		const res = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
