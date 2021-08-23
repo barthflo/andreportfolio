@@ -48,6 +48,7 @@ const AppProvider = ({ children }) => {
 		}
 	}, [pathname]);
 
+	console.log(state);
 	return (
 		<AppContext.Provider value={{ state, dispatch, actions }}>
 			{children}

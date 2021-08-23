@@ -8,6 +8,8 @@ import Intro from './Intro';
 import About from './About';
 import Filmography from './Filmography';
 import Skills from './Skills';
+import Contact from './Contact';
+import { useHistory } from 'react-router-dom';
 
 const sections = [
 	{
@@ -28,19 +30,29 @@ const sections = [
 		id: 'skills',
 		light: true,
 	},
+	{
+		component: <Contact />,
+		id: 'contact',
+	},
 ];
 
 const HomeView = () => {
 	const { home, actions, dispatch, error } = useAppContext();
+	const { push } = useHistory();
 
 	useEffect(() => {
 		if (!home) {
 			actions.getHomePageDatas(dispatch);
 		}
 	}, [home, actions, dispatch]);
-	if (error) {
-		console.log(error);
-	}
+
+	useEffect(() => {
+		if (error) {
+			console.log(error);
+			push(`/${error.status}`);
+		}
+	}, [error, push]);
+
 	return (
 		<Page
 			title="Andre Fonseca - Filmmaker"
