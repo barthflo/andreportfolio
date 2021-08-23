@@ -45,13 +45,13 @@ const Container = styled.div`
 			opacity: 0;
 		}
 		to {
-			height: fit-content;
+			height: auto;
 			opacity: 1;
 		}
 	}
 	@keyframes fade-out {
 		from {
-			height: fit-content;
+			height: auto;
 			opacity: 1;
 		}
 		to {
