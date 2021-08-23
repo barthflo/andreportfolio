@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import useAppContext from './hooks/useAppContext';
 import RenderRoutes, { routes } from './components/RenderRoutes';

@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import useAppContext from '../../hooks/useAppContext';
+import SnackBar from '../../components/SnackBar';
 
 const Contact = () => {
 	const { dispatch } = useAppContext();
+	const [notif, setNotif] = useState(null);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setNotif(false);
+		}, 5000);
+
+		return () => clearTimeout(timeout);
+	}, [notif]);
 	return (
 		<Wrapper>
 			<h2>Contact Me</h2>
+			{notif && notif.display && (
+				<SnackBar show={true} content={notif.content} status={notif.status} />
+			)}
 			<Formik
 				initialValues={{
 					from: '',
@@ -28,6 +41,11 @@ const Contact = () => {
 					try {
 						await axios.post('/api/messages', values);
 						setSubmitting(false);
+						setNotif({
+							display: true,
+							content: `Thank you ${values.from}! I'll get back in touch with you shortly.`,
+							status: 'default',
+						});
 						resetForm();
 					} catch (err) {
 						console.log(err);
