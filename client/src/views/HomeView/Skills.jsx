@@ -20,8 +20,6 @@ const Skills = () => {
 		});
 	};
 
-	console.log(skills);
-
 	return (
 		<Wrapper>
 			<StarContainer>
@@ -46,7 +44,7 @@ const Skills = () => {
 };
 
 const Wrapper = styled.div`
-	padding: 10vh 0;
+	padding: 10vh 0 12vh;
 	position: relative;
 	display: flex;
 	flex-direction: column;

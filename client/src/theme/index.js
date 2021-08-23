@@ -22,9 +22,22 @@ ul, li {
     padding : 0;
     list-style-type: none;
 }
-button:focus-visible, a:focus-visible, figure:focus-visible , img:focus-visible {
+textarea {
+	resize: vertical;
+}
+button:focus-visible, a:focus-visible, figure:focus-visible , img:focus-visible{
 	outline : auto;
 	padding: 5px;
+}
+input:focus-visible, textarea:focus-visible {
+	outline : auto;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #2E2F31 inset !important;
+	-webkit-text-fill-color : #C4C4C4 !important
 }
 `;
 export default Global;
