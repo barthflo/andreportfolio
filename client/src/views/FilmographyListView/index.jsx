@@ -71,7 +71,7 @@ const Wrapper = styled.div`
 	font-weight: 300;
 	& h1 {
 		font-weight: 600;
-		font-style: capitalize;
+		text-transform: capitalize;
 		font-size: 36px;
 		@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 			font-size: 48px;
