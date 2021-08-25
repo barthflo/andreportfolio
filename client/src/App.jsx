@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useAppContext from './hooks/useAppContext';
 import RenderRoutes, { routes } from './components/RenderRoutes';
 import Loading from './components/Loading';
+import { useHistory } from 'react-router-dom';
 
 function App() {
 	const { initialized, error } = useAppContext();
+	const { push } = useHistory();
+
+	useEffect(() => {
+		if (error) {
+			push(`/${error.status}`);
+		}
+	}, [error, push]);
 
 	return (
 		<>

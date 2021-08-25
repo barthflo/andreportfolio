@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
 import useAppContext from '../../hooks/useAppContext';
 import Page from '../../components/Page';
 import Loading from '../../components/Loading';
@@ -11,21 +10,13 @@ import { HashLink } from 'react-router-hash-link';
 
 const FilmographyListView = () => {
 	window.scrollTo(0, 0);
-	const { filmographyList, actions, dispatch, error } = useAppContext();
-	const { push } = useHistory();
+	const { filmographyList, actions, dispatch } = useAppContext();
 
 	useEffect(() => {
 		if (!filmographyList) {
 			actions.getMultipleFilmography(dispatch);
 		}
 	}, [filmographyList, actions, dispatch]);
-
-	useEffect(() => {
-		if (error) {
-			console.log(error);
-			push(`/${error.status}`);
-		}
-	}, [error, push]);
 
 	return (
 		<Page
@@ -121,8 +112,6 @@ const Link = styled(HashLink)`
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 	text-align: center;
 	text-transform: capitalize;
-	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
-	}
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 		min-width: 230px;
 		align-self: flex-end;

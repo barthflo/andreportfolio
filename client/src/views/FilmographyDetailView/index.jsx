@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import useAppContext from '../../hooks/useAppContext';
-import { useHistory } from 'react-router-dom';
 import Page from '../../components/Page';
 import Loading from '../../components/Loading';
 import Section from '../../components/Section';
@@ -15,8 +14,7 @@ const FilmographyDetailView = ({
 	},
 }) => {
 	window.scrollTo(0, 0);
-	const { filmographyItem, actions, dispatch, error } = useAppContext();
-	const { push } = useHistory();
+	const { filmographyItem, actions, dispatch } = useAppContext();
 
 	const getVideoUrl = () => {
 		const videoUrl = filmographyItem.urls.filter((url) =>
@@ -35,13 +33,6 @@ const FilmographyDetailView = ({
 		actions.getSingleFilmography(dispatch, slug);
 		return () => dispatch({ type: 'RESET_FILM_DETAIL' });
 	}, [actions, dispatch, slug]);
-
-	useEffect(() => {
-		if (error) {
-			console.log(error);
-			push(`/${error.status}`);
-		}
-	}, [error, push]);
 
 	return (
 		<Page

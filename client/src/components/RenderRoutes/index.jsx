@@ -63,6 +63,12 @@ export const routes = [
 		component: React.lazy(() => import('../../views/Errors/ 500')),
 	},
 	{
+		path: '/login',
+		exact: true,
+		guard: Fragment,
+		component: React.lazy(() => import('../../views/LoginView')),
+	},
+	{
 		path: '/admin',
 		guard: AuthGuard,
 		layout: AdminLayout,

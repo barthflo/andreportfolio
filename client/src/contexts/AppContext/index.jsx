@@ -44,7 +44,12 @@ const AppProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		if (pathname === '/404' || pathname === '/403' || pathname === '/500') {
+		if (
+			pathname === '/404' ||
+			pathname === '/403' ||
+			pathname === '/500' ||
+			pathname === '/login'
+		) {
 			actions.initialize(dispatch);
 		}
 	}, [pathname]);
