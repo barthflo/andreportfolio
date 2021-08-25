@@ -43,7 +43,7 @@ const Container = styled.aside`
 	overflow: auto;
 `;
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.i`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
