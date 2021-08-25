@@ -24,7 +24,7 @@ const VideoPlayer = ({ videoUrl, pictureUrl }) => {
 	);
 };
 
-const VideoWrapper = styled.div`
+const VideoWrapper = styled.section`
 	position: relative;
 	align-self: flex-start;
 	height: 50vh;

@@ -7,6 +7,7 @@ import Section from '../../components/Section';
 import styled from 'styled-components';
 import VideoPlayer from './VideoPlayer';
 import Thumbs from './Thumbs';
+import Infos from './Infos';
 
 const FilmographyDetailView = ({
 	match: {
@@ -17,7 +18,6 @@ const FilmographyDetailView = ({
 	const { filmographyItem, actions, dispatch, error } = useAppContext();
 	const { push } = useHistory();
 
-	console.log(filmographyItem);
 	const getVideoUrl = () => {
 		const videoUrl = filmographyItem.urls.filter((url) =>
 			url.includes('video'),
@@ -64,7 +64,9 @@ const FilmographyDetailView = ({
 						pictureUrl={getPicturesUrls()[0]}
 					/>
 					<Thumbs pictures={getPicturesUrls()} slug={slug} />
-					<Section>{slug}</Section>
+					<Section>
+						<Infos film={filmographyItem} />
+					</Section>
 				</Wrapper>
 			)}
 		</Page>
@@ -76,7 +78,7 @@ const LoadingWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-	padding: 1vh 0;
+	padding: 1vh 0 2vh;
 	position: relative;
 	display: flex;
 	flex-direction: column;

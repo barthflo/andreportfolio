@@ -43,7 +43,7 @@ const Thumbs = ({ pictures, slug }) => {
 		setShowLightbox(!showLightbox);
 	};
 	return (
-		<>
+		<section>
 			<Wrapper
 				responsive={responsive}
 				deviceType={deviceType}
@@ -75,7 +75,7 @@ const Thumbs = ({ pictures, slug }) => {
 					onClose={() => toggleLightbox()}
 				/>
 			)}
-		</>
+		</section>
 	);
 };
 

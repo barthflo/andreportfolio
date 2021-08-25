@@ -120,6 +120,7 @@ const Link = styled(HashLink)`
 	border: 1px solid ${(props) => props.theme.palette.border};
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 	text-align: center;
+	text-transform: capitalize;
 	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
