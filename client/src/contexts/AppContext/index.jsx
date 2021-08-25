@@ -25,9 +25,10 @@ const AppProvider = ({ children }) => {
 	}, [dispatch]);
 
 	const filmoDetailInit = useCallback(async () => {
-		await actions.getSingleFilmography(dispatch);
+		const slug = pathname.split('/').pop();
+		await actions.getSingleFilmography(dispatch, slug);
 		actions.initialize(dispatch);
-	}, [dispatch]);
+	}, [dispatch, pathname]);
 
 	useEffect(() => {
 		if (pathname === '/') {
@@ -43,7 +44,7 @@ const AppProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		if (pathname === '/404') {
+		if (pathname === '/404' || pathname === '/403' || pathname === '/500') {
 			actions.initialize(dispatch);
 		}
 	}, [pathname]);

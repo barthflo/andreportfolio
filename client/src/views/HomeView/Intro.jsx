@@ -7,7 +7,9 @@ import ReactPlayer from 'react-player';
 const Intro = () => {
 	const {
 		siteSettings,
-		home: { video },
+		home: {
+			video: { video, picture },
+		},
 	} = useAppContext();
 	const [loading, setLoading] = useState(true);
 	const [poster, setPoster] = useState(false);
@@ -24,10 +26,10 @@ const Intro = () => {
 			{!loading && (
 				<>
 					{poster ? (
-						<Poster src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.framerated.co.uk%2Ffrwpcontent%2Fuploads%2F2019%2F09%2Fjoker01-1170x658.jpg&f=1&nofb=1" />
+						<Poster src={picture} />
 					) : (
 						<Video
-							url={video.url}
+							url={video}
 							playing
 							loop
 							muted

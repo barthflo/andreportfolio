@@ -33,6 +33,11 @@ export const reducer = (state, action) => {
 				...state,
 				filmographyItem: payload,
 			};
+		case 'RESET_FILM_DETAIL':
+			return {
+				...state,
+				filmographyItem: null,
+			};
 		case 'ERROR':
 			return {
 				...state,
@@ -63,11 +68,11 @@ export const actions = {
 	getHomePageDatas: async (dispatch) => {
 		try {
 			const {
-				data: { video },
+				data: { video, picture },
 			} = await axios.get(`/api/intro?category=intro`);
 			const {
 				data: { about },
-			} = await axios.get(`/api/about?category=about&size=large`);
+			} = await axios.get(`/api/about`);
 			const {
 				data: { filmography },
 			} = await axios.get(`/api/filmography?limit=3`);
@@ -77,7 +82,7 @@ export const actions = {
 			dispatch({
 				type: 'GET_HOME_DATAS',
 				payload: {
-					video,
+					video: { video, picture },
 					about,
 					filmography,
 					skills,
@@ -110,12 +115,20 @@ export const actions = {
 			});
 		}
 	},
-	getSingleFilmography: async (dispatch) => {
-		const res = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
-		const { data } = res;
-		dispatch({
-			type: 'GET_SINGLE_FILMOGRAPHY',
-			payload: data,
-		});
+	getSingleFilmography: async (dispatch, slug) => {
+		try {
+			const res = await axios.get('/api/filmography/' + slug);
+			const { data: film } = res;
+			dispatch({
+				type: 'GET_SINGLE_FILMOGRAPHY',
+				payload: film,
+			});
+		} catch (err) {
+			console.error(err);
+			dispatch({
+				type: 'ERROR',
+				payload: err.response,
+			});
+		}
 	},
 };

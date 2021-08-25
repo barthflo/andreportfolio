@@ -39,6 +39,13 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px #2E2F31 inset !important;
 	-webkit-text-fill-color : #C4C4C4 !important
 }
+
+@media (max-width : 600px){
+	.lb-img{
+		max-height: unset !important;
+		max-width: unset !important;
+	}
+}
 `;
 export default Global;
 
