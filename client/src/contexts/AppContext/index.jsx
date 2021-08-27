@@ -48,13 +48,14 @@ const AppProvider = ({ children }) => {
 			pathname === '/404' ||
 			pathname === '/403' ||
 			pathname === '/500' ||
-			pathname === '/login'
+			pathname === '/login' ||
+			pathname.includes('admin')
 		) {
 			actions.initialize(dispatch);
 		}
 	}, [pathname]);
 
-	console.log(state);
+	// console.log(state);
 	return (
 		<AppContext.Provider value={{ state, dispatch, actions }}>
 			{children}

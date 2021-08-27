@@ -7,13 +7,16 @@ import Global, { theme } from './theme';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppProvider from './contexts/AppContext';
+import AuthProvider from './contexts/AuthContext';
 
 ReactDOM.render(
 	<Router>
 		<Global />
 		<ThemeProvider theme={theme}>
 			<AppProvider>
-				<App />
+				<AuthProvider>
+					<App />
+				</AuthProvider>
 			</AppProvider>
 		</ThemeProvider>
 	</Router>,
