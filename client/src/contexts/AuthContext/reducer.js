@@ -37,7 +37,7 @@ export const actions = {
 		try {
 			const res = await axios.post('/api/auth/login', data, {
 				withCredentials: true,
-				credentials: 'include',
+				// credentials: 'include',
 			});
 			const { user, isAuthenticated } = res.data;
 			localStorage.setItem('user', JSON.stringify(user));
