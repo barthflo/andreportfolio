@@ -52,10 +52,9 @@ export const actions = {
 			} = res;
 
 			if (status === 204) {
-				return dispatch({
-					type: 'ERROR',
-					payload: { error: 'Email address not found' },
-				});
+				return {
+					error: { email: 'Email address not found' },
+				};
 			}
 			localStorage.setItem('user', JSON.stringify(user));
 			dispatch({
@@ -64,21 +63,10 @@ export const actions = {
 					user,
 				},
 			});
-			dispatch({
-				type: 'ERROR',
-				payload: {
-					error: null,
-				},
-			});
 		} catch (err) {
 			console.error(err);
 			if (err.response.status === 401) {
-				dispatch({
-					type: 'ERROR',
-					payload: {
-						error: err.response.data,
-					},
-				});
+				return { error: { password: err.response.data } };
 			} else {
 				dispatch({
 					type: 'ERROR',

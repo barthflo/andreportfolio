@@ -18,6 +18,7 @@ const Contact = () => {
 
 		return () => clearTimeout(timeout);
 	}, [notif]);
+
 	return (
 		<Wrapper>
 			<h2>Contact Me</h2>
