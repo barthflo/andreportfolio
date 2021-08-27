@@ -111,6 +111,7 @@ const ImageContainer = styled.figure`
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
 		width: 35%;
+		max-width: 340px;
 		padding-right: 100px;
 	}
 `;
