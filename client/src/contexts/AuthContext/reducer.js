@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const initialState = {
 	user: null,
@@ -15,12 +16,19 @@ export const reducer = (state, action) => {
 			return {
 				...state,
 				user: payload.user,
+				// isAuthenticated: payload.isAuthenticated,
+			};
+		case 'VERIFY':
+			return {
+				...state,
 				isAuthenticated: payload.isAuthenticated,
+				user: payload.user,
 			};
 		case 'LOGOUT':
 			return {
 				...state,
-				payload,
+				user: payload.user,
+				isAuthenticated: payload.isAuthenticated,
 			};
 		case 'ERROR':
 			return {
@@ -37,15 +45,59 @@ export const actions = {
 		try {
 			const res = await axios.post('/api/auth/login', data, {
 				withCredentials: true,
-				// credentials: 'include',
 			});
-			const { user, isAuthenticated } = res.data;
+			const {
+				data: { user },
+				status,
+			} = res;
+
+			if (status === 204) {
+				return dispatch({
+					type: 'ERROR',
+					payload: { error: 'Email address not found' },
+				});
+			}
 			localStorage.setItem('user', JSON.stringify(user));
 			dispatch({
 				type: 'LOGIN',
 				payload: {
 					user,
+				},
+			});
+			dispatch({
+				type: 'ERROR',
+				payload: {
+					error: null,
+				},
+			});
+		} catch (err) {
+			console.error(err);
+			if (err.response.status === 401) {
+				dispatch({
+					type: 'ERROR',
+					payload: {
+						error: err.response.data,
+					},
+				});
+			} else {
+				dispatch({
+					type: 'ERROR',
+					payload: {
+						error: err.response,
+					},
+				});
+			}
+		}
+	},
+	verify: async (dispatch) => {
+		try {
+			const res = await axios.get('/api/auth');
+			const { isAuthenticated } = res.data;
+			dispatch({
+				type: 'VERIFY',
+				payload: {
 					isAuthenticated,
+					user: JSON.parse(localStorage.getItem('user')),
 				},
 			});
 		} catch (err) {
@@ -56,6 +108,7 @@ export const actions = {
 					error: err.response,
 				},
 			});
+			Cookies.remove('accessToken');
 		}
 	},
 	logout: (dispatch) => {
@@ -66,5 +119,7 @@ export const actions = {
 				isAuthenticated: false,
 			},
 		});
+		Cookies.remove('accessToken');
+		localStorage.removeItem('user');
 	},
 };

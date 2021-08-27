@@ -9,16 +9,11 @@ const AuthProvider = ({ children }) => {
 
 	const accessToken = Cookies.get('accessToken');
 
-	// console.log(state);
+	console.log(state);
+
 	useEffect(() => {
 		if (accessToken) {
-			dispatch({
-				type: 'LOGIN',
-				payload: {
-					user: JSON.parse(localStorage.getItem('user')),
-					isAuthenticated: true,
-				},
-			});
+			actions.verify(dispatch);
 		} else {
 			localStorage.removeItem('user');
 			dispatch({
@@ -26,6 +21,7 @@ const AuthProvider = ({ children }) => {
 			});
 		}
 	}, [accessToken]);
+
 	if (!state) return null;
 
 	return (

@@ -73,18 +73,5 @@ const ButtonWrapper = styled.div`
 		width: fit-content;
 	}
 `;
-// const Button = styled.button`
-// 	margin-top: 30px;
-// 	min-width: 100%;
-// 	padding: 7px;
-// 	color: ${(props) => props.theme.palette.text.secondary.dark};
-// 	background: ${(props) => props.theme.palette.background.surface.secondary};
-// 	border: 1px solid ${(props) => props.theme.palette.border};
-// 	box-shadow: ${(props) => props.theme.shadows.bottom};
-// 	text-align: center;
-// 	text-transform: capitalize;
-// 	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
-// 		min-width: 230px;
-// `;
 
 export default Index;

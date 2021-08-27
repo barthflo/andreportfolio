@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import Page from '../../components/Page';
 import useAuth from '../../hooks/useAuth';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const LoginView = () => {
-	const { login, dispatch, isAuthenticated } = useAuth();
+	const { login, dispatch, isAuthenticated, error } = useAuth();
 
 	const [inputValues, setInputValues] = useState({
 		email: '',
 		password: '',
 	});
 
+	const {
+		location: { state },
+	} = useHistory();
 	const handleChange = (e) => {
 		setInputValues({
 			...inputValues,
@@ -23,8 +26,11 @@ const LoginView = () => {
 		await login(dispatch, inputValues);
 	};
 
+	if (error && error.status === 500) {
+		return <Redirect to="/500" />;
+	}
 	if (isAuthenticated) {
-		return <Redirect to="/admin" />;
+		return <Redirect to={state.from} />;
 	}
 
 	return (
