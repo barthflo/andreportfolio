@@ -9,7 +9,6 @@ import About from './About';
 import Filmography from './Filmography';
 import Skills from './Skills';
 import Contact from './Contact';
-import { useHistory } from 'react-router-dom';
 
 const sections = [
 	{
@@ -37,21 +36,13 @@ const sections = [
 ];
 
 const HomeView = () => {
-	const { home, actions, dispatch, error } = useAppContext();
-	const { push } = useHistory();
+	const { home, actions, dispatch } = useAppContext();
 
 	useEffect(() => {
 		if (!home) {
 			actions.getHomePageDatas(dispatch);
 		}
 	}, [home, actions, dispatch]);
-
-	useEffect(() => {
-		if (error) {
-			console.log(error);
-			push(`/${error.status}`);
-		}
-	}, [error, push]);
 
 	return (
 		<Page

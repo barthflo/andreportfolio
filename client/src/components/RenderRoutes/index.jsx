@@ -63,6 +63,12 @@ export const routes = [
 		component: React.lazy(() => import('../../views/Errors/ 500')),
 	},
 	{
+		path: '/login',
+		exact: true,
+		guard: Fragment,
+		component: React.lazy(() => import('../../views/LoginView')),
+	},
+	{
 		path: '/admin',
 		guard: AuthGuard,
 		layout: AdminLayout,
@@ -71,6 +77,11 @@ export const routes = [
 				path: '/admin',
 				exact: true,
 				component: React.lazy(() => import('../../views/Admin/HomeView')),
+			},
+			{
+				path: '/admin/settings',
+				exact: true,
+				component: () => <div>Settings</div>,
 			},
 			{
 				component: () => <Redirect to="/404" />,

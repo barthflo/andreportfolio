@@ -63,6 +63,7 @@ export const actions = {
 			});
 		} catch (err) {
 			console.error(err);
+			dispatch({ type: 'ERROR', payload: err.response });
 		}
 	},
 	getHomePageDatas: async (dispatch) => {
