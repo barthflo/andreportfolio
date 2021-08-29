@@ -4,7 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import { Redirect, useHistory } from 'react-router-dom';
 
 const AuthGuard = ({ children }) => {
-	const { isAuthenticated, logout, dispatch } = useAuth();
+	const { isAuthenticated } = useAuth();
 	const [redirect, setRedirect] = useState(false);
 	const {
 		location: { pathname },
@@ -19,14 +19,7 @@ const AuthGuard = ({ children }) => {
 	if (redirect) {
 		return <Redirect to={{ pathname: '/login', state: { from: pathname } }} />;
 	}
-	return (
-		<>
-			Auth necessary
-			<button onClick={() => logout(dispatch)}>Logout</button>
-			<br />
-			{children}
-		</>
-	);
+	return <>{children}</>;
 };
 
 AuthGuard.propTypes = {
