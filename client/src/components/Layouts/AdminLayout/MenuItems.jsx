@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
 import { useLocation } from 'react-router-dom';
@@ -11,8 +11,10 @@ import {
 	IoLogOutOutline,
 } from 'react-icons/io5';
 import { GiSkills } from 'react-icons/gi';
+import { FaUserCog } from 'react-icons/fa';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import useAuth from '../../../hooks/useAuth';
+import uuid from 'react-uuid';
 
 const items = [
 	{
@@ -24,6 +26,11 @@ const items = [
 		path: '/admin/settings',
 		label: 'General Settings',
 		icon: <IoSettingsSharp />,
+	},
+	{
+		path: '/admin/profile',
+		label: 'Profile',
+		icon: <FaUserCog />,
 	},
 	{
 		label: 'Filmography',
@@ -88,12 +95,12 @@ const MenuItems = ({ onClick }) => {
 	};
 
 	const renderItems = (items) => {
-		return items.map((item, index) => {
+		return items.map((item) => {
 			const { path, label, subItems, icon } = item;
 			renderActiveItem(item, path);
 
 			return (
-				<>
+				<Fragment key={uuid()}>
 					{subItems ? (
 						<SubContainer as="ul">
 							<li style={{ display: 'flex', alignItems: 'center' }}>
@@ -104,14 +111,14 @@ const MenuItems = ({ onClick }) => {
 							{renderItems(subItems)}
 						</SubContainer>
 					) : (
-						<Container key={index} active={item.active}>
+						<Container active={item.active}>
 							{icon}
 							<Item active={item.active} onClick={onClick}>
 								<Link to={path}>{label}</Link>
 							</Item>
 						</Container>
 					)}
-				</>
+				</Fragment>
 			);
 		});
 	};
@@ -136,7 +143,7 @@ const List = styled.ul`
 	justify-content: center;
 	align-items: start;
 	padding: 0 10px;
-	margin-bottom: 50px;
+	margin: 50px 0;
 `;
 
 const Container = styled.li`
@@ -156,17 +163,19 @@ const SubContainer = styled(Container)`
 	flex-direction: column;
 	align-items: start;
 
-	& > li:first-child{
+	& li:first-child{
 		margin-bottom: 8px;
 		margin-left: 0;
 		& span{
-			font-size: 18px;
+			font-size: 16px;
 			font-style: normal;
 			font-weight: 600;
-
+			@media (min-width: ${(props) => props.theme.breakpoints.md}){
+				font-size: 18px;
+			}
 		}
 	}
-	& > li {
+	& li {
 		margin-bottom: 0;
 		margin-left: 20px;
 		& span {
@@ -189,9 +198,12 @@ const Item = styled.span`
 		props.active
 			? props.theme.palette.action.active
 			: props.theme.palette.text.secondary.light};
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 400;
 	transition: 0.2s ease-in;
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		font-size: 18px;
+	}
 `;
 
 const Link = styled(HashLink)``;

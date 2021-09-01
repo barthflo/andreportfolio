@@ -5,6 +5,7 @@ export const initialState = {
 	filmographyList: null,
 	filmographyItem: null,
 	siteSettings: null,
+	messages: null,
 	error: null,
 	initialized: false,
 };
@@ -37,6 +38,11 @@ export const reducer = (state, action) => {
 			return {
 				...state,
 				filmographyItem: null,
+			};
+		case 'GET_MESSAGES':
+			return {
+				...state,
+				messages: payload.messages,
 			};
 		case 'ERROR':
 			return {
@@ -130,6 +136,18 @@ export const actions = {
 				type: 'ERROR',
 				payload: err.response,
 			});
+		}
+	},
+	getMessages: async (dispatch, query) => {
+		try {
+			const res = await axios.get('/api/messages' + query);
+			const { data: messages } = res;
+			dispatch({
+				type: 'GET_MESSAGES',
+				payload: messages,
+			});
+		} catch (err) {
+			console.error(err);
 		}
 	},
 };

@@ -4,9 +4,11 @@ import useAuth from '../../hooks/useAuth';
 import { Redirect, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Form from './Form';
+import useAppContext from '../../hooks/useAppContext';
 
 const LoginView = () => {
 	const { isAuthenticated, error } = useAuth();
+	const { siteSettings } = useAppContext();
 	const {
 		location: { state },
 	} = useHistory();
@@ -19,7 +21,14 @@ const LoginView = () => {
 	}
 
 	return (
-		<Page title="Andre Fonseca - Filmmaker - Login" description="Login page">
+		<Page
+			title={`${
+				siteSettings
+					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
+					: 'Loading'
+			} - Login`}
+			description="Login page"
+		>
 			<Wrapper>
 				<Container light>
 					<Logo src={`${process.env.PUBLIC_URL}/android-chrome-192x192.png`} />
