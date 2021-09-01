@@ -10,7 +10,7 @@ import { HashLink } from 'react-router-hash-link';
 
 const FilmographyListView = () => {
 	window.scrollTo(0, 0);
-	const { filmographyList, actions, dispatch } = useAppContext();
+	const { filmographyList, siteSettings, actions, dispatch } = useAppContext();
 
 	useEffect(() => {
 		if (!filmographyList) {
@@ -20,8 +20,14 @@ const FilmographyListView = () => {
 
 	return (
 		<Page
-			title="Andre Fonseca - Filmmaker - Filmography"
-			description="List of all the movies and short films directed or written by Andre Fonseca"
+			title={`${
+				siteSettings
+					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
+					: 'Loading'
+			} - Filmography`}
+			description={`List of all the movies and short films directed or written by ${
+				siteSettings && siteSettings.userName
+			}`}
 		>
 			{!filmographyList ? (
 				<LoadingWrapper>

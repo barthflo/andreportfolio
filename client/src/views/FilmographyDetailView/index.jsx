@@ -14,7 +14,7 @@ const FilmographyDetailView = ({
 	},
 }) => {
 	window.scrollTo(0, 0);
-	const { filmographyItem, actions, dispatch } = useAppContext();
+	const { filmographyItem, siteSettings, actions, dispatch } = useAppContext();
 
 	const getVideoUrl = () => {
 		const videoUrl = filmographyItem.urls.filter((url) =>
@@ -36,7 +36,11 @@ const FilmographyDetailView = ({
 
 	return (
 		<Page
-			title={`Andre Fonseca - Filmmaker - ${slug
+			title={`${
+				siteSettings
+					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
+					: 'Loading'
+			} - ${slug
 				.trim()
 				.replace(/^\w/, (c) => c.toUpperCase())} trailer and infos`}
 			description={`Trailer and informations about the movie ${slug
