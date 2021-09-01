@@ -54,18 +54,6 @@ const Infos = () => {
 	);
 };
 
-// const Card = styled.div`
-// 	width: 100%;
-// 	padding: 20px;
-// 	background: ${(props) => props.theme.palette.background.surface.primary};
-// 	box-shadow: ${(props) => props.theme.shadows.bottom};
-// 	margin-bottom: 20px;
-// 	display: flex;
-// 	flex-direction: column;
-// 	justify-content: center;
-// 	align-items: center;
-// `;
-
 const Text = styled.p`
 	margin-bottom: 10px;
 `;
