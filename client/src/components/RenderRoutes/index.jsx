@@ -81,7 +81,9 @@ export const routes = [
 			{
 				path: '/admin/settings',
 				exact: true,
-				component: () => <div>Settings</div>,
+				component: React.lazy(() =>
+					import('../../views/Admin/SiteSettingsEditView'),
+				),
 			},
 			{
 				component: () => <Redirect to="/404" />,

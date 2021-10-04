@@ -29,7 +29,7 @@ const Infos = () => {
 		<Card>
 			<Text>
 				Modify your site settings{' '}
-				<Link to="/admin/settings" title="Link to settings" color>
+				<Link to="/admin/settings" title="Link to settings" color="true">
 					here
 				</Link>
 			</Text>
