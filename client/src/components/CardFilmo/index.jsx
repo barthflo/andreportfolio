@@ -48,7 +48,7 @@ const Container = styled.article`
 
 const ImageContainer = styled.figure`
 	width: 100%;
-	height: 350px;
+	height: 300px;
 	margin-bottom: 7px;
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 `;

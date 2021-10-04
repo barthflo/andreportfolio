@@ -5,6 +5,7 @@ export const initialState = {
 	filmographyList: null,
 	filmographyItem: null,
 	siteSettings: null,
+	messages: null,
 	error: null,
 	initialized: false,
 };
@@ -38,6 +39,11 @@ export const reducer = (state, action) => {
 				...state,
 				filmographyItem: null,
 			};
+		case 'GET_MESSAGES':
+			return {
+				...state,
+				messages: payload.messages,
+			};
 		case 'ERROR':
 			return {
 				...state,
@@ -69,7 +75,7 @@ export const actions = {
 	getHomePageDatas: async (dispatch) => {
 		try {
 			const {
-				data: { video, picture },
+				data: { video, picture, id },
 			} = await axios.get(`/api/intro?category=intro`);
 			const {
 				data: { about },
@@ -83,7 +89,7 @@ export const actions = {
 			dispatch({
 				type: 'GET_HOME_DATAS',
 				payload: {
-					video: { video, picture },
+					video: { video, picture, id },
 					about,
 					filmography,
 					skills,
@@ -130,6 +136,18 @@ export const actions = {
 				type: 'ERROR',
 				payload: err.response,
 			});
+		}
+	},
+	getMessages: async (dispatch, query) => {
+		try {
+			const res = await axios.get('/api/messages' + query);
+			const { data: messages } = res;
+			dispatch({
+				type: 'GET_MESSAGES',
+				payload: messages,
+			});
+		} catch (err) {
+			console.error(err);
 		}
 	},
 };

@@ -24,7 +24,7 @@ const Container = styled.div`
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 	background: ${(props) => {
 		if (props.status === 'success') {
-			return 'green';
+			return '#317033';
 		}
 		if (props.status === 'error') {
 			return 'red';
@@ -36,7 +36,7 @@ const Container = styled.div`
 	animation: ${(props) =>
 		props.show ? 'fade-in 0.5s both' : 'fade-out .5s both'};
 	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
-		width: 350px;
+		width: 360px;
 	}
 
 	@keyframes fade-in {

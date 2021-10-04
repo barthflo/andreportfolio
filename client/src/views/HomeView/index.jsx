@@ -36,7 +36,7 @@ const sections = [
 ];
 
 const HomeView = () => {
-	const { home, actions, dispatch } = useAppContext();
+	const { home, siteSettings, actions, dispatch } = useAppContext();
 
 	useEffect(() => {
 		if (!home) {
@@ -46,8 +46,16 @@ const HomeView = () => {
 
 	return (
 		<Page
-			title="Andre Fonseca - Filmmaker - Home"
-			description="Home page of the portfolio of Andre Salgado Fonseca,filmmaker. Andre Fonsecca is an aspiring writer and director"
+			title={`${
+				siteSettings
+					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
+					: 'Loading'
+			} - Home`}
+			description={`Home page of the portfolio of ${
+				siteSettings && siteSettings.userName
+			}, filmmaker. ${
+				siteSettings && siteSettings.userName
+			} is an aspiring writer and director`}
 		>
 			{!home ? (
 				<LoadingWrapper>

@@ -10,7 +10,7 @@ import { HashLink } from 'react-router-hash-link';
 
 const FilmographyListView = () => {
 	window.scrollTo(0, 0);
-	const { filmographyList, actions, dispatch } = useAppContext();
+	const { filmographyList, siteSettings, actions, dispatch } = useAppContext();
 
 	useEffect(() => {
 		if (!filmographyList) {
@@ -20,8 +20,14 @@ const FilmographyListView = () => {
 
 	return (
 		<Page
-			title="Andre Fonseca - Filmmaker - Filmography"
-			description="List of all the movies and short films directed or written by Andre Fonseca"
+			title={`${
+				siteSettings
+					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
+					: 'Loading'
+			} - Filmography`}
+			description={`List of all the movies and short films directed or written by ${
+				siteSettings && siteSettings.userName
+			}`}
 		>
 			{!filmographyList ? (
 				<LoadingWrapper>
@@ -101,11 +107,15 @@ const Container = styled.div`
 const CardWrapper = styled.div`
 	width: 350px;
 	flex-grow: 1;
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		width: 400px;
+	}
 `;
 
 const Link = styled(HashLink)`
 	min-width: 100%;
 	padding: 7px;
+	margin-bottom: 20px;
 	color: ${(props) => props.theme.palette.text.secondary.dark};
 	background: ${(props) => props.theme.palette.background.surface.secondary};
 	border: 1px solid ${(props) => props.theme.palette.border};

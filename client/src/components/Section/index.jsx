@@ -13,6 +13,7 @@ const Section = ({ children, light, id, height, ...rest }) => {
 const Container = styled.section`
 	width: 100%;
 	height: ${(props) => props.height};
+	min-height: ${(props) => props.rest.minHeight && props.rest.minHeight};
 	position: relative;
 	background: ${(props) => {
 		if (props.light) return props.theme.palette.background.paper;
@@ -33,14 +34,17 @@ const Container = styled.section`
 	& p {
 		font-size: 16px;
 	}
+	@media (min-width: ${(props) => props.theme.breakpoints.xs}) {
+		${(props) => props.rest.admin && 'padding: 0 20px;'}
+	}
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 		padding: 0 20px;
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
-		padding: 0 105px;
+		${(props) => !props.rest.admin && 'padding: 0 105px;'}
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-		padding: 0 210px;
+		${(props) => !props.rest.admin && 'padding: 0 210px;'}
 	} ;
 `;
 

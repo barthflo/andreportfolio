@@ -108,7 +108,7 @@ const CardWrapper = styled.div`
 `;
 
 const Link = styled(HashLink)`
-	font-size: 12px;
+	font-size: 14px;
 	font-style: italic;
 	align-self: flex-end;
 	margin-top: 10px;
