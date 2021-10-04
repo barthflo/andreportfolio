@@ -44,11 +44,14 @@ const Container = styled.header`
 	z-index: 1000;
 	height: 70px;
 	width: 100vw;
-	padding: 20px 20px 20px 35px;
+	padding: 20px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	text-transform: uppercase;
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		padding-left: 35px;
+	}
 `;
 
 const Title = styled.span`

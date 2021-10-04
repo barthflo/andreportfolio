@@ -107,11 +107,15 @@ const Container = styled.div`
 const CardWrapper = styled.div`
 	width: 350px;
 	flex-grow: 1;
+	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
+		width: 400px;
+	}
 `;
 
 const Link = styled(HashLink)`
 	min-width: 100%;
 	padding: 7px;
+	margin-bottom: 20px;
 	color: ${(props) => props.theme.palette.text.secondary.dark};
 	background: ${(props) => props.theme.palette.background.surface.secondary};
 	border: 1px solid ${(props) => props.theme.palette.border};

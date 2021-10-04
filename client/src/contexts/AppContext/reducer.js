@@ -75,7 +75,7 @@ export const actions = {
 	getHomePageDatas: async (dispatch) => {
 		try {
 			const {
-				data: { video, picture },
+				data: { video, picture, id },
 			} = await axios.get(`/api/intro?category=intro`);
 			const {
 				data: { about },
@@ -89,7 +89,7 @@ export const actions = {
 			dispatch({
 				type: 'GET_HOME_DATAS',
 				payload: {
-					video: { video, picture },
+					video: { video, picture, id },
 					about,
 					filmography,
 					skills,
