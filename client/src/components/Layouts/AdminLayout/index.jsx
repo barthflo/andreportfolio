@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
@@ -7,6 +7,11 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions';
 
 const AdminLayout = ({ children }) => {
 	const { width } = useWindowDimensions();
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [children]);
+
 	return (
 		<Wrapper>
 			<TopBar />
