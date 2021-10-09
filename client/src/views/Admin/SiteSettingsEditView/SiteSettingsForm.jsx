@@ -137,7 +137,7 @@ const SiteSettingsForm = ({ siteSettings, video: { video, picture, id } }) => {
 				}) => (
 					<Form onSubmit={handleSubmit}>
 						<InputGroup>
-							<Label htmlFor="sitTitle">Site title</Label>
+							<Label htmlFor="siteTitle">Site title</Label>
 							<Input
 								type="text"
 								name="siteTitle"

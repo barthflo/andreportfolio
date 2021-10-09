@@ -71,7 +71,8 @@ const Title = styled.h1`
 	}
 	@media (min-width: 1140px) {
 		font-size: 5.8em;
-		max-width: 300px;
+		max-width: fit-content;
+		overflow-wrap: break-word;
 	}
 `;
 

@@ -86,6 +86,13 @@ export const routes = [
 				),
 			},
 			{
+				path: '/admin/profile',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/ProfileEditView'),
+				),
+			},
+			{
 				component: () => <Redirect to="/404" />,
 			},
 		],

@@ -31,6 +31,7 @@ const Container = styled.section`
 	justify-content: ${(props) =>
 		props.rest.justifyContent && props.rest.justifyContent};
 	align-items: ${(props) => props.rest.alignItems && props.rest.alignItems};
+	flex-wrap: ${(props) => props.rest.wrap && props.rest.wrap};
 	& p {
 		font-size: 16px;
 	}

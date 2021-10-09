@@ -10,6 +10,7 @@ import {
 	IoFilmSharp,
 	IoLogOutOutline,
 } from 'react-icons/io5';
+import { HiEye } from 'react-icons/hi';
 import { GiSkills } from 'react-icons/gi';
 import { FaUserCog } from 'react-icons/fa';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
@@ -65,6 +66,12 @@ const items = [
 		label: 'Messages',
 		icon: <RiMessage2Fill />,
 	},
+	{
+		path: '/',
+		label: 'View Website',
+		target: '_blank',
+		icon: <HiEye />,
+	},
 ];
 
 const MenuItems = ({ onClick }) => {
@@ -96,7 +103,7 @@ const MenuItems = ({ onClick }) => {
 
 	const renderItems = (items) => {
 		return items.map((item) => {
-			const { path, label, subItems, icon } = item;
+			const { path, label, subItems, icon, target } = item;
 			renderActiveItem(item, path);
 
 			return (
@@ -114,7 +121,9 @@ const MenuItems = ({ onClick }) => {
 						<Container active={item.active}>
 							{icon}
 							<Item active={item.active} onClick={onClick}>
-								<Link to={path}>{label}</Link>
+								<Link to={path} target={target || '_self'}>
+									{label}
+								</Link>
 							</Item>
 						</Container>
 					)}

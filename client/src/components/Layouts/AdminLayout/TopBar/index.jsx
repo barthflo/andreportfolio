@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
+import { HashLink } from 'react-router-hash-link';
 import useWindowDimensions from '../../../../hooks/useWindowDimensions';
 import SideBar from '../SideBar';
 import { IoLogOutOutline } from 'react-icons/io5';
@@ -17,7 +18,7 @@ const TopBar = () => {
 
 	return (
 		<Container>
-			<Title>Dashboard</Title>
+			<Title to="/admin">Dashboard</Title>
 			<Logout onClick={() => logout(dispatch)}>
 				Logout
 				<IoLogOutOutline size={'1.2em'} />
@@ -54,7 +55,7 @@ const Container = styled.header`
 	}
 `;
 
-const Title = styled.span`
+const Title = styled(HashLink)`
 	font-family: ${(props) => props.theme.typography.menu.title};
 	color: ${(props) => props.theme.palette.text.secondary.light};
 	font-size: 20px;
