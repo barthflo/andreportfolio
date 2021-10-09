@@ -70,10 +70,15 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 								update: values.newPassword,
 							};
 						}
-						const { data: user } = await axios.put('/api/auth/user', values, {
-							headers: { 'Content-Type': 'application/json' },
-							onUploadProgress: (e) => setProgress((e.loaded * 100) / e.total),
-						});
+						const { data: user } = await axios.put(
+							'/api/auth/account',
+							values,
+							{
+								headers: { 'Content-Type': 'application/json' },
+								onUploadProgress: (e) =>
+									setProgress((e.loaded * 100) / e.total),
+							},
+						);
 						dispatch({
 							type: 'UPDATE',
 							payload: { user },
