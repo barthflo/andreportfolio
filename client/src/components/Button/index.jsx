@@ -14,6 +14,8 @@ const BasedButton = ({
 	target,
 	download,
 	disabled,
+	title,
+	...rest
 }) => {
 	return (
 		<Button
@@ -28,6 +30,7 @@ const BasedButton = ({
 			download={download}
 			disabled={disabled}
 			target="__blank"
+			title={title}
 		>
 			{label}
 		</Button>
@@ -47,6 +50,8 @@ const Button = styled.button`
 				return '#55544f';
 			} else if (props.variant === 'primary') {
 				return props.theme.palette.background.surface.secondary;
+			} else if (props.variant === 'warning') {
+				return props.theme.palette.action.warning;
 			} else {
 				return 'none';
 			}
@@ -58,7 +63,6 @@ const Button = styled.button`
     cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
     box-shadow : ${(props) => props.theme.shadows.bottom};
 	text-align: center;
-
 `;
 
 BasedButton.propTypes = {

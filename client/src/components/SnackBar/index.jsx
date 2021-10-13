@@ -21,6 +21,7 @@ const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 10000;
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 	background: ${(props) => {
 		if (props.status === 'success') {

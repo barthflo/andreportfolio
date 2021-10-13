@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { HashLink as Link } from 'react-router-hash-link';
+import { useLocation } from 'react-router';
+// import StyledButton from '../../components/Button/';
 
 const CardFilmo = ({ film, heading }) => {
 	const [overflow, setOverflow] = useState(false);
 	const { urls, title, date, synopsis } = film;
+	const { pathname } = useLocation();
+
 	// eslint-disable-next-line array-callback-return
 	const picture = urls.filter((url) => {
 		const extension = url.split('.').pop().split('?').shift();
@@ -16,23 +20,57 @@ const CardFilmo = ({ film, heading }) => {
 
 	return (
 		<Container>
-			<Link to={`/filmography/${film.title.toLowerCase()}`}>
+			<Link
+				to={
+					pathname.includes('admin')
+						? `/admin/filmography/edit/${film.title.toLowerCase()}`
+						: `/filmography/${film.title.toLowerCase()}`
+				}
+			>
 				<ImageContainer>
 					<Image src={picture} alt={`Picture frame from the movie ${title}`} />
 				</ImageContainer>
 			</Link>
 			<CardInfosContainer $overflow={Boolean(overflow)}>
-				<Link to={`/filmography/${film.title.toLowerCase()}`}>
+				<Link
+					to={
+						pathname.includes('admin')
+							? `/admin/filmography/edit/${film.title.toLowerCase()}`
+							: `/filmography/${film.title.toLowerCase()}`
+					}
+				>
 					<Title as={heading}>
 						{title} ({date})
 					</Title>
 				</Link>
-				<Description>
+				<Description margin={pathname.includes('admin')}>
 					{overflow ? synopsis : synopsis.slice(0, 150) + '...'}
 				</Description>
-				<Button onClick={() => setOverflow(!overflow)}>
-					{overflow ? 'collapse' : 'read more'}
-				</Button>
+				{pathname.includes('admin') ? (
+					<ActionsContainer>
+						<ButtonWrapper>
+							<ButtonLink
+								to={`/admin/filmography/edit/${film.title.toLowerCase()}`}
+							>
+								Edit Content{' '}
+							</ButtonLink>
+						</ButtonWrapper>
+						{/* <ButtonWrapper shrink>
+							<StyledButton
+								type="button"
+								label="Delete Film"
+								// dark
+								variant="warning"
+								// width="100%"
+								// onClick={() => goBack()}
+							/>
+						</ButtonWrapper> */}
+					</ActionsContainer>
+				) : (
+					<Button onClick={() => setOverflow(!overflow)}>
+						{overflow ? 'collapse' : 'read more'}
+					</Button>
+				)}
 			</CardInfosContainer>
 		</Container>
 	);
@@ -89,6 +127,7 @@ const Description = styled.p`
 	font-weight: 300;
 	font-size: 14px !important;
 	text-align: justify;
+	margin-bottom: ${(props) => (props.margin ? '10px' : 'unset')};
 `;
 
 const Button = styled.button`
@@ -105,6 +144,31 @@ const Button = styled.button`
 		color: ${(props) => props.theme.palette.action.hover};
 		transition: 0.2s ease-in;
 	}
+`;
+
+const ActionsContainer = styled.div`
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+`;
+
+const ButtonWrapper = styled.span`
+	display: flex;
+	flex-grow: ${(props) => (props.shrink ? '0' : '1')};
+	padding: 5px;
+	margin-top: 10px;
+`;
+
+const ButtonLink = styled(Link)`
+	min-width: 100%;
+	padding: 7px;
+	color: ${(props) => props.theme.palette.text.secondary.dark};
+	background: ${(props) => props.theme.palette.background.surface.secondary};
+	border: 1px solid ${(props) => props.theme.palette.border};
+	box-shadow: ${(props) => props.theme.shadows.bottom};
+	text-align: center;
+	text-transform: capitalize;
 `;
 
 CardFilmo.propTypes = {

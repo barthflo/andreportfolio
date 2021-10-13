@@ -7,12 +7,13 @@ import Button from '../../../components/Button';
 import axios from 'axios';
 import ProgressBar from '../../../components/ProgressBar';
 import SnackBar from '../../../components/SnackBar';
+import { useHistory } from 'react-router';
 
 const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 	const [isDisabled, setDisabled] = useState(true);
-
 	const [progress, setProgress] = useState(0);
 	const [notif, setNotif] = useState(null);
+	const { goBack } = useHistory();
 	const currentPasswordRef = useRef(null);
 	const newPasswordRef = useRef(null);
 
@@ -211,17 +212,32 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 								<Error>{errors.newPassword}</Error>
 							)}
 						</InputGroup>
-
-						<ButtonWrapper>
-							<Button
-								type={isDisabled ? 'submit' : 'button'}
-								label={isDisabled ? 'Edit' : 'Save'}
-								variant="primary"
-								width="100%"
-								onClick={() => setDisabled(!isDisabled)}
-								disabled={isSubmitting}
-							/>
-						</ButtonWrapper>
+						<ActionsContainer>
+							<ButtonWrapper>
+								<Button
+									type="button"
+									label="Previous"
+									dark
+									width="100%"
+									onClick={() => goBack()}
+								/>
+							</ButtonWrapper>
+							<ButtonWrapper>
+								<Button
+									type={isDisabled ? 'submit' : 'button'}
+									label={isDisabled ? 'Edit' : 'Save'}
+									variant="primary"
+									width="100%"
+									onClick={() => setDisabled(!isDisabled)}
+									disabled={isSubmitting || Object.keys(errors).length}
+									title={
+										Object.keys(errors).length > 0
+											? 'One or more fields are invalid. Check the details you entered in the form'
+											: undefined
+									}
+								/>
+							</ButtonWrapper>
+						</ActionsContainer>
 					</Form>
 				)}
 			</Formik>
@@ -274,12 +290,17 @@ const Error = styled.span`
 	text-transform: capitalize;
 `;
 
-const ButtonWrapper = styled.div`
+const ActionsContainer = styled.div`
+	display: flex;
 	width: 100%;
-	align-self: flex-end;
-	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-		width: unset;
-	}
+	flex-wrap: wrap;
+	justify-content: flex-end;
+`;
+
+const ButtonWrapper = styled.span`
+	display: flex;
+	flex-grow: 1;
+	padding: 5px;
 `;
 
 const Heading = styled.h2`

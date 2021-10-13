@@ -60,6 +60,7 @@ export const theme = {
 		action: {
 			hover: '#8429B5',
 			active: '#F0CC10',
+			warning: '#b52637',
 		},
 		background: {
 			default: '#1D1E20',
