@@ -99,6 +99,23 @@ const MenuItems = ({ onClick }) => {
 			item.active = true;
 			return;
 		}
+
+		if (pathname.includes('filmography/edit')) {
+			items
+				.find((item) => item.label === 'Filmography')
+				.subItems.find(
+					(subitem) => subitem.path === '/admin/filmography',
+				).active = true;
+			return;
+		}
+		if (pathname.includes('skills/edit')) {
+			items
+				.find((item) => item.label === 'Skills')
+				.subItems.find(
+					(subitem) => subitem.path === '/admin/skills',
+				).active = true;
+			return;
+		}
 	};
 
 	const renderItems = (items) => {

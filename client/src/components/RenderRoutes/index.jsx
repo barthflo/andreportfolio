@@ -93,6 +93,27 @@ export const routes = [
 				),
 			},
 			{
+				path: '/admin/filmography',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/FilmographyListView'),
+				),
+			},
+			{
+				path: '/admin/filmography/create',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/FilmographyCreateView'),
+				),
+			},
+			{
+				path: '/admin/filmography/edit/:slug',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/FilmographyEditView'),
+				),
+			},
+			{
 				component: () => <Redirect to="/404" />,
 			},
 		],

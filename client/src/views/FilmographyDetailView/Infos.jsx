@@ -32,7 +32,7 @@ const Infos = ({ film: { date, synopsis, production, distributor, role } }) => {
 					{role}
 				</Info>
 			</InfoContainer>
-			<Link to="/filmography">Go to filmography</Link>
+			<Link to="/filmography">Back to filmography</Link>
 		</Section>
 	);
 };

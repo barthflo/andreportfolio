@@ -34,10 +34,15 @@ const AppProvider = ({ children }) => {
 		if (pathname === '/') {
 			homeInit();
 		}
-		if (pathname === '/filmography') {
+		if (pathname === '/filmography' || pathname === '/admin/filmography') {
 			filmoListInit();
 		}
-		if (pathname.match(/filmography/gi) && pathname !== '/filmography') {
+		if (
+			pathname.match(/filmography/gi) &&
+			pathname !== '/filmography' &&
+			pathname !== '/admin/filmography' &&
+			pathname !== '/admin/filmography/create'
+		) {
 			filmoDetailInit();
 		}
 		//eslint-disable-next-line
