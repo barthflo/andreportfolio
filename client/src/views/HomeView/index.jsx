@@ -44,6 +44,8 @@ const HomeView = () => {
 		}
 	}, [home, actions, dispatch]);
 
+	console.log(home);
+
 	return (
 		<Page
 			title={`${

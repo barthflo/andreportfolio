@@ -72,6 +72,7 @@ export const theme = {
 			overlay: '#2d2f30',
 			gradient:
 				'radial-gradient(50% 50% at 50% 50%, #2F3137 0%, #1A1B1F 100%);',
+			transparent: '#2d2f3073',
 		},
 		text: {
 			primary: '#F0CC10',

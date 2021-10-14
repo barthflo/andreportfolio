@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { HashLink as Link } from 'react-router-hash-link';
 import { useLocation } from 'react-router';
-// import StyledButton from '../../components/Button/';
+import StyledButton from '../../components/Button/';
+import Overlay from '../Overlay';
+import useAppContext from '../../hooks/useAppContext';
+import axios from 'axios';
 
 const CardFilmo = ({ film, heading }) => {
 	const [overflow, setOverflow] = useState(false);
-	const { urls, title, date, synopsis } = film;
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	const { urls, title, date, synopsis, id } = film;
 	const { pathname } = useLocation();
+	const { actions, dispatch } = useAppContext();
 
 	// eslint-disable-next-line array-callback-return
 	const picture = urls.filter((url) => {
@@ -18,20 +23,42 @@ const CardFilmo = ({ film, heading }) => {
 		}
 	})[0];
 
+	const deleteFilm = async () => {
+		try {
+			const {
+				data: { info },
+			} = await axios.delete('/api/filmography/' + id, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				data: urls.map((url) =>
+					url.split('?')[0].split('/').slice(3).join('/'),
+				),
+			});
+			actions.getMultipleFilmography(dispatch);
+			setConfirmDelete(false);
+			console.log(info);
+		} catch (err) {
+			console.error(err);
+			dispatch({
+				type: 'ERROR',
+				payload: err.response,
+			});
+		}
+	};
+
 	return (
-		<Container>
-			<Link
-				to={
-					pathname.includes('admin')
-						? `/admin/filmography/edit/${film.title.toLowerCase()}`
-						: `/filmography/${film.title.toLowerCase()}`
-				}
-			>
-				<ImageContainer>
-					<Image src={picture} alt={`Picture frame from the movie ${title}`} />
-				</ImageContainer>
-			</Link>
-			<CardInfosContainer $overflow={Boolean(overflow)}>
+		<>
+			{confirmDelete && (
+				<Overlay
+					title="Are you sure you want to delete this item?"
+					description={`This action will permanently erase all the datas for this movie. \n\n Press confirm to continue or cancel to come back.`}
+					actionLabel="Confirm"
+					validate={deleteFilm}
+					close={() => setConfirmDelete(false)}
+				/>
+			)}
+			<Container>
 				<Link
 					to={
 						pathname.includes('admin')
@@ -39,40 +66,57 @@ const CardFilmo = ({ film, heading }) => {
 							: `/filmography/${film.title.toLowerCase()}`
 					}
 				>
-					<Title as={heading}>
-						{title} ({date})
-					</Title>
+					<ImageContainer>
+						<Image
+							src={picture}
+							alt={`Picture frame from the movie ${title}`}
+						/>
+					</ImageContainer>
 				</Link>
-				<Description margin={pathname.includes('admin')}>
-					{overflow ? synopsis : synopsis.slice(0, 150) + '...'}
-				</Description>
-				{pathname.includes('admin') ? (
-					<ActionsContainer>
-						<ButtonWrapper>
-							<ButtonLink
-								to={`/admin/filmography/edit/${film.title.toLowerCase()}`}
-							>
-								Edit Content{' '}
-							</ButtonLink>
-						</ButtonWrapper>
-						{/* <ButtonWrapper shrink>
-							<StyledButton
-								type="button"
-								label="Delete Film"
-								// dark
-								variant="warning"
-								// width="100%"
-								// onClick={() => goBack()}
-							/>
-						</ButtonWrapper> */}
-					</ActionsContainer>
-				) : (
-					<Button onClick={() => setOverflow(!overflow)}>
-						{overflow ? 'collapse' : 'read more'}
-					</Button>
-				)}
-			</CardInfosContainer>
-		</Container>
+				<CardInfosContainer $overflow={Boolean(overflow)}>
+					<Link
+						to={
+							pathname.includes('admin')
+								? `/admin/filmography/edit/${film.title.toLowerCase()}`
+								: `/filmography/${film.title.toLowerCase()}`
+						}
+					>
+						<Title as={heading}>
+							{title} ({date})
+						</Title>
+					</Link>
+					<Description margin={pathname.includes('admin')}>
+						{overflow ? synopsis : synopsis.slice(0, 150) + '...'}
+					</Description>
+					{pathname.includes('admin') ? (
+						<ActionsContainer>
+							<ButtonWrapper>
+								<ButtonLink
+									to={`/admin/filmography/edit/${film.title.toLowerCase()}`}
+								>
+									Edit Content{' '}
+								</ButtonLink>
+							</ButtonWrapper>
+							<ButtonWrapper shrink>
+								<StyledButton
+									type="button"
+									label="Delete Film"
+									minWidth="fit-content"
+									// dark
+									variant="warning"
+									// width="100%"
+									onClick={setConfirmDelete}
+								/>
+							</ButtonWrapper>
+						</ActionsContainer>
+					) : (
+						<Button onClick={() => setOverflow(!overflow)}>
+							{overflow ? 'collapse' : 'read more'}
+						</Button>
+					)}
+				</CardInfosContainer>
+			</Container>
+		</>
 	);
 };
 

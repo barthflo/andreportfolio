@@ -40,7 +40,8 @@ const AppProvider = ({ children }) => {
 		if (
 			pathname.match(/filmography/gi) &&
 			pathname !== '/filmography' &&
-			pathname !== '/admin/filmography'
+			pathname !== '/admin/filmography' &&
+			pathname !== '/admin/filmography/create'
 		) {
 			filmoDetailInit();
 		}

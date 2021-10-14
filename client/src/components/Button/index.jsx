@@ -8,6 +8,7 @@ const BasedButton = ({
 	type,
 	label,
 	width,
+	minWidth,
 	height,
 	dark,
 	as,
@@ -23,6 +24,7 @@ const BasedButton = ({
 			onClick={onClick}
 			variant={variant}
 			width={width}
+			minWidth={minWidth}
 			height={height}
 			dark={dark}
 			as={as}
@@ -50,6 +52,8 @@ const Button = styled.button`
 				return '#55544f';
 			} else if (props.variant === 'primary') {
 				return props.theme.palette.background.surface.secondary;
+			} else if (props.variant === 'secondary') {
+				return props.theme.palette.background.surface.primary;
 			} else if (props.variant === 'warning') {
 				return props.theme.palette.action.warning;
 			} else {
@@ -57,7 +61,7 @@ const Button = styled.button`
 			}
 		}}
     padding : 7px;
-    min-width: 230px;
+    min-width: ${(props) => props.minWidth};
     font-family : ${(props) => props.theme.typography.main};
     font-size: 16px;
     cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -71,6 +75,7 @@ BasedButton.propTypes = {
 	type: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	width: PropTypes.string,
+	minWidth: PropTypes.string,
 	height: PropTypes.string,
 	dark: PropTypes.bool,
 	as: PropTypes.string,
@@ -83,6 +88,7 @@ BasedButton.defaultProps = {
 	onClick: () => null,
 	type: 'button',
 	width: 'fit-content',
+	minWidth: '230px',
 	height: 'fit-content',
 	dark: false,
 	as: 'button',

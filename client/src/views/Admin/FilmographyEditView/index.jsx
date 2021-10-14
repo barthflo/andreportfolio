@@ -16,7 +16,6 @@ const FilmographyEditView = ({
 	const { height } = useWindowDimensions();
 	const { filmographyItem, siteSettings, actions, dispatch } = useAppContext();
 
-	console.log(filmographyItem);
 	useEffect(() => {
 		actions.getSingleFilmography(dispatch, slug);
 		return () => dispatch({ type: 'RESET_FILM_DETAIL' });
@@ -24,12 +23,14 @@ const FilmographyEditView = ({
 
 	return (
 		<Page
-			title={`Dashboard - Profile - ${
+			title={`Dashboard - ${
+				filmographyItem ? filmographyItem.title + ' edit form' : 'Loading'
+			} - ${
 				siteSettings
 					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
 					: 'Loading'
 			}`}
-			description="Administration dashboard user settings page "
+			description="Administration dashboard edit filmography form"
 		>
 			<Section
 				minHeight={(height - 70).toString() + 'px'}
@@ -47,8 +48,6 @@ const FilmographyEditView = ({
 				) : (
 					<Card>
 						<FilmoForm film={filmographyItem} />
-
-						{/* {user && <ProfileForm user={user} dispatch={dispatch} />} */}
 					</Card>
 				)}
 			</Section>

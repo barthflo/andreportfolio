@@ -11,25 +11,14 @@ import ProgressBar from '../../../components/ProgressBar';
 import { TiDelete as DeleteIcon } from 'react-icons/ti';
 import { useHistory } from 'react-router';
 
-const FilmoForm = ({
-	film: { date, distributor, id, production, role, synopsis, title, urls },
-}) => {
+const FilmoForm = () => {
 	const { actions, dispatch } = useAppContext();
-	const [isDisabled, setDisabled] = useState(true);
 	const [progress, setProgress] = useState(0);
 	const { goBack, push } = useHistory();
 
-	const getVideoUrl = () => {
-		const videoUrl = urls.filter((url) => url.includes('video'));
-		return videoUrl[0];
-	};
-	const getPicturesUrls = () => {
-		const picturesUrls = urls.filter((url) => url.includes('images'));
-		return picturesUrls;
-	};
 	const [preview, setPreview] = useState({
-		video: getVideoUrl(),
-		pictures: getPicturesUrls(),
+		video: null,
+		pictures: [],
 	});
 
 	const videoInput = useRef(null);
@@ -38,16 +27,17 @@ const FilmoForm = ({
 	return (
 		<>
 			<ProgressBar progress={progress} />
+
 			<Formik
 				initialValues={{
-					title: title,
-					synopsis: synopsis,
-					date: date,
-					role: role,
-					production: production,
-					distributor: distributor,
+					title: '',
+					synopsis: '',
+					date: '',
+					role: '',
+					production: '',
+					distributor: '',
 					pictures: [],
-					remove: [],
+					video: undefined,
 				}}
 				validationSchema={Yup.object().shape({
 					title: Yup.string().max(150).required('The title is required'),
@@ -56,34 +46,35 @@ const FilmoForm = ({
 					role: Yup.string().required('The role is required'),
 					production: Yup.string().nullable(),
 					distributor: Yup.string().nullable(),
-					video: Yup.mixed().test(
-						'videoType',
-						'Unsupported file format. Accepted format : .mp4',
-						(value) => (!value ? true : ['video/mp4'].includes(value.type)),
-					),
-					pictures: Yup.array().of(
-						Yup.mixed().test(
-							'picType',
-							'Unsupported file format. Accepted format : .jpg, .jpeg, .png',
-							(value) =>
-								!value
-									? true
-									: ['image/jpg', 'image/jpeg', 'image/png'].includes(
-											value.type,
-									  ),
+					video: Yup.mixed()
+						.test(
+							'videoType',
+							'Unsupported file format. Accepted format : .mp4',
+							(value) => (!value ? true : ['video/mp4'].includes(value.type)),
+						)
+						.required('Video required'),
+					pictures: Yup.array()
+						.min(1, 'At least one picture is required')
+						.of(
+							Yup.mixed().test(
+								'picType',
+								'Unsupported file format. Accepted format : .jpg, .jpeg, .png',
+								(value) =>
+									!value
+										? true
+										: ['image/jpg', 'image/jpeg', 'image/png'].includes(
+												value.type,
+										  ),
+							),
 						),
-					),
 				})}
 				onSubmit={async (values, { setSubmitting, setFieldError }) => {
 					try {
-						if (!preview.pictures.length && !values.pictures.length) {
-							setFieldError('pictures', 'At least one picture is required');
+						if (!values.video) {
+							setFieldError('video', 'The video is required');
 							return;
 						}
 						const formData = new FormData();
-
-						if (!values.remove.length) delete values.remove;
-						if (!values.pictures.length) delete values.pictures;
 
 						Object.entries(values).forEach(([key, value]) => {
 							if (key === 'pictures') {
@@ -96,21 +87,24 @@ const FilmoForm = ({
 							}
 						});
 
-						await axios.put('/api/filmography/' + id, formData, {
+						const {
+							data: { info },
+						} = await axios.post('/api/filmography/', formData, {
 							headers: { 'Content-Type': 'multipart/form-data' },
 							onUploadProgress: (e) => setProgress((e.loaded * 100) / e.total),
 						});
 
-						actions.getHomePageDatas(dispatch);
 						actions.getMultipleFilmography(dispatch);
+						actions.getHomePageDatas(dispatch);
 						setProgress(0);
 						setSubmitting(false);
+
 						push({
 							pathname: '/admin/filmography',
 							state: {
 								notif: {
 									display: true,
-									content: `Film details successfully updated`,
+									content: info,
 									status: 'success',
 								},
 							},
@@ -145,7 +139,6 @@ const FilmoForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.title && touched.title)}
-								disabled={isDisabled}
 							/>
 							{errors.title && touched.title && <Error>{errors.title}</Error>}
 						</InputGroup>
@@ -159,7 +152,6 @@ const FilmoForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.date && touched.date)}
-								disabled={isDisabled}
 							/>
 							{errors.date && touched.date && <Error>{errors.date}</Error>}
 						</InputGroup>
@@ -173,7 +165,6 @@ const FilmoForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.role && touched.role)}
-								disabled={isDisabled}
 							/>
 							{errors.role && touched.role && <Error>{errors.role}</Error>}
 						</InputGroup>
@@ -189,7 +180,6 @@ const FilmoForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.synopsis && touched.synopsis)}
-								disabled={isDisabled}
 							/>
 							{errors.synopsis && touched.synopsis && (
 								<Error>{errors.synopsis}</Error>
@@ -205,7 +195,6 @@ const FilmoForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.production && touched.production)}
-								disabled={isDisabled}
 							/>
 							{errors.production && touched.production && (
 								<Error>{errors.production}</Error>
@@ -221,7 +210,6 @@ const FilmoForm = ({
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.distributor && touched.distributor)}
-								disabled={isDisabled}
 							/>
 							{errors.distributor && touched.distributor && (
 								<Error>{errors.distributor}</Error>
@@ -238,17 +226,6 @@ const FilmoForm = ({
 								onChange={(e) => {
 									if (e.currentTarget.files[0]) {
 										setFieldValue('video', e.currentTarget.files[0]);
-										if (preview.video && preview.video.includes('amazonaws')) {
-											setFieldValue('remove', [
-												...values.remove,
-												preview.video
-													.split('?')[0]
-													.split('/')
-													.slice(3)
-													.join('/'),
-											]);
-										}
-
 										setPreview({
 											...preview,
 											video: URL.createObjectURL(e.currentTarget.files[0]),
@@ -258,28 +235,30 @@ const FilmoForm = ({
 							/>
 							<StyledFileInput
 								as="span"
-								hidden={isDisabled}
 								onClick={() => videoInput.current.click()}
+								error={Boolean(errors.video && touched.video)}
 							>
-								Chose a new video
+								Chose a video
 							</StyledFileInput>
-							<VideoPreview
-								id="videoPreview"
-								url={preview.video}
-								playsinline
-								controls
-								playing
-								loop
-								muted
-								config={{
-									file: {
-										attributes: {
-											controlsList: 'nodownload',
+							{preview.video && (
+								<VideoPreview
+									id="videoPreview"
+									url={preview.video}
+									playsinline
+									controls
+									playing
+									loop
+									muted
+									config={{
+										file: {
+											attributes: {
+												controlsList: 'nodownload',
+											},
 										},
-									},
-								}}
-								onError={(e) => console.log(e)}
-							/>
+									}}
+									onError={(e) => console.log(e)}
+								/>
+							)}
 							{errors.video && touched.video && <Error>{errors.video}</Error>}
 						</InputGroup>
 
@@ -312,10 +291,10 @@ const FilmoForm = ({
 							/>
 							<StyledFileInput
 								as="span"
-								hidden={isDisabled && !errors.pictures}
 								onClick={() => pictureInput.current.click()}
+								error={Boolean(errors.pictures && touched.pictures)}
 							>
-								Add new pictures
+								Add pictures
 							</StyledFileInput>
 							<ImageContainer>
 								{preview.pictures.map((url, index) => (
@@ -323,12 +302,6 @@ const FilmoForm = ({
 										<RemoveButton
 											title="Remove the picture"
 											onClick={() => {
-												if (url.includes('amazonaws')) {
-													setFieldValue('remove', [
-														...values.remove,
-														url.split('?')[0].split('/').slice(3).join('/'),
-													]);
-												}
 												setPreview({
 													...preview,
 													pictures: preview.pictures.filter(
@@ -336,7 +309,6 @@ const FilmoForm = ({
 													),
 												});
 											}}
-											disabled={isDisabled}
 										>
 											<DeleteIcon />
 										</RemoveButton>
@@ -362,11 +334,10 @@ const FilmoForm = ({
 							</ButtonWrapper>
 							<ButtonWrapper>
 								<Button
-									type={isDisabled ? 'submit' : 'button'}
-									label={isDisabled ? 'Edit' : 'Save'}
+									type="submit"
+									label="Save"
 									variant="primary"
 									width="100%"
-									onClick={() => setDisabled(!isDisabled)}
 									disabled={isSubmitting || Object.keys(errors).length}
 									title={
 										Object.keys(errors).length > 0
@@ -425,7 +396,7 @@ const FileInput = styled.input`
 
 const StyledFileInput = styled(Input)`
 	cursor: pointer;
-	display: ${(props) => (props.hidden ? 'none' : 'block')};
+	display: block;
 `;
 const Error = styled.span`
 	color: red;
@@ -477,7 +448,7 @@ const RemoveButton = styled.span`
 	right: 0;
 	height: 35px;
 	width: 35px;
-	display: ${(props) => (props.disabled ? 'none' : 'flex')};
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;

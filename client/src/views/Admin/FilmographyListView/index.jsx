@@ -1,19 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAppContext from '../../../hooks/useAppContext';
 import Page from '../../../components/Page';
 import Loading from '../../../components/Loading';
 import Section from '../../../components/Section';
 import CardFilmo from '../../../components/CardFilmo';
 import styled from 'styled-components';
+import BasedButton from '../../../components/Button';
+import { useHistory } from 'react-router';
+import SnackBar from '../../../components/SnackBar';
 
 const FilmographyListView = () => {
 	const { filmographyList, siteSettings, actions, dispatch } = useAppContext();
+	const {
+		push,
+		location: { state },
+	} = useHistory();
+
+	const [notif, setNotif] = useState(state ? state.notif : null);
 
 	useEffect(() => {
 		if (!filmographyList) {
 			actions.getMultipleFilmography(dispatch);
 		}
 	}, [filmographyList, actions, dispatch]);
+
+	useEffect(() => {
+		let timeout;
+		if (notif) {
+			timeout = setTimeout(() => {
+				setNotif(null);
+			}, 5000);
+		}
+		return () => clearTimeout(timeout);
+	}, [notif]);
 
 	return (
 		<Page
@@ -30,8 +49,25 @@ const FilmographyListView = () => {
 				</LoadingWrapper>
 			) : (
 				<Section admin>
+					{notif && (
+						<SnackBar
+							show={notif.display}
+							content={notif.content}
+							status={notif.status}
+						/>
+					)}
 					<Wrapper>
-						<h1>Filmography List</h1>
+						<Header>
+							<h1>Filmography List</h1>
+							<BasedButton
+								label="Add New"
+								minWidth="fit-content"
+								// width="100%"
+								dark
+								variant="secondary"
+								onClick={() => push('/admin/filmography/create')}
+							/>
+						</Header>
 
 						<Container>
 							{filmographyList.map((film) => (
@@ -64,6 +100,20 @@ const Wrapper = styled.div`
 		font-size: 2em;
 		align-self: start;
 		margin-bottom: 20px;
+	}
+`;
+
+const Header = styled.header`
+	width: 100%;
+	display: flex;
+	align-self: start;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+	& h1 {
+		margin-bottom: 0;
+		flex-grow: 1;
 	}
 `;
 
