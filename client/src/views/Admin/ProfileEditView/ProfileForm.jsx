@@ -40,8 +40,8 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 					fullname: fullname,
 					email: email,
 					phone: phone,
-					currentPassword: null,
-					newPassword: null,
+					currentPassword: '',
+					newPassword: '',
 				}}
 				validationSchema={Yup.object().shape({
 					fullname: Yup.string().max(250).required('The name is required'),
@@ -50,12 +50,14 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 						.max(250)
 						.required('The email address is required'),
 					phone: Yup.string().max(25).required('The phone number is required'),
-					currentPassword: Yup.string().nullable(),
+					currentPassword: Yup.string(),
+					// .nullable()
 					newPassword: Yup.string().when('currentPassword', (value) =>
-						value === null
-							? Yup.string().nullable()
-							: Yup.string()
-									.nullable()
+						value.length === 0
+							? Yup.string()
+							: // .nullable()
+							  Yup.string()
+									// .nullable()
 									.min(6, 'Your new password must be at least 6 characters')
 									.required('You need to enter a new password'),
 					),
@@ -65,7 +67,7 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 					{ setSubmitting, setFieldError, resetForm },
 				) => {
 					try {
-						if (values.currentPassword) {
+						if (values.currentPassword.length !== 0) {
 							values.password = {
 								current: values.currentPassword,
 								update: values.newPassword,
@@ -98,13 +100,13 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 								fullname: user.fullname,
 								email: user.email,
 								phone: user.phone,
-								currentPassword: null,
-								newPassword: null,
+								currentPassword: '',
+								newPassword: '',
 							},
 						});
-						currentPasswordRef.current.value = null;
-						newPasswordRef.current.value = null;
-						delete values.password;
+						// currentPasswordRef.current.value = null;
+						// newPasswordRef.current.value = null;
+						// delete values.password;
 					} catch (err) {
 						console.error(err);
 						if (err.response.status === 401) {
