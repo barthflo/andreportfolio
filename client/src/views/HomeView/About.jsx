@@ -94,6 +94,7 @@ const Container = styled.div`
 	flex-direction: column-reverse;
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
 		flex-direction: row;
+		min-height: 80vh;
 	}
 `;
 
@@ -135,6 +136,7 @@ const Content = styled.div`
 	margin-bottom: 10px;
 	font-size: 18px;
 	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		align-self: center;
 		width: 60%;
 		margin-left: 40%;
 		padding-left: 20px;

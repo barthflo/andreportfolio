@@ -9,13 +9,15 @@ import ProgressBar from '../../../components/ProgressBar';
 import SnackBar from '../../../components/SnackBar';
 import { useHistory } from 'react-router';
 
-const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
+const ProfileForm = ({ user: { fullname, email, phone, about }, dispatch }) => {
 	const [isDisabled, setDisabled] = useState(true);
 	const [progress, setProgress] = useState(0);
 	const [notif, setNotif] = useState(null);
-	const { goBack } = useHistory();
-	const currentPasswordRef = useRef(null);
-	const newPasswordRef = useRef(null);
+	const { goBack, push } = useHistory();
+	const [preview, setPreview] = useState({
+		picture: about ? about.profilePic : null,
+	});
+	const pictureInput = useRef(null);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -40,24 +42,39 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 					fullname: fullname,
 					email: email,
 					phone: phone,
-					currentPassword: null,
-					newPassword: null,
+					bio: about ? about.content : undefined,
+					currentPassword: '',
+					newPassword: '',
+					remove: [],
+					isOwner: about ? true : false,
 				}}
 				validationSchema={Yup.object().shape({
+					isOwner: Yup.boolean(),
 					fullname: Yup.string().max(250).required('The name is required'),
 					email: Yup.string()
 						.email('The email address must be a valid format')
 						.max(250)
 						.required('The email address is required'),
 					phone: Yup.string().max(25).required('The phone number is required'),
-					currentPassword: Yup.string().nullable(),
-					newPassword: Yup.string().when('currentPassword', (value) =>
-						value === null
-							? Yup.string().nullable()
-							: Yup.string()
-									.nullable()
-									.min(6, 'Your new password must be at least 6 characters')
-									.required('You need to enter a new password'),
+					bio: Yup.string().when('isOwner', {
+						is: true,
+						then: Yup.string().required('A biography is required'),
+						otherwise: Yup.string(),
+					}),
+					currentPassword: Yup.string(),
+					newPassword: Yup.mixed().when('currentPassword', {
+						is: (value) => value !== undefined,
+						then: Yup.string()
+							.min(6, 'Your new password must be at least 6 characters')
+							.required('You need to enter a new password'),
+					}),
+					picture: Yup.mixed().test(
+						'picType',
+						'Unsupported file format. Accepted format : .jpg, .jpeg, .png',
+						(value) =>
+							!value
+								? true
+								: ['image/jpg', 'image/jpeg', 'image/png'].includes(value.type),
 					),
 				})}
 				onSubmit={async (
@@ -65,21 +82,49 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 					{ setSubmitting, setFieldError, resetForm },
 				) => {
 					try {
-						if (values.currentPassword) {
-							values.password = {
+						const userValues = {
+							fullname: values.fullname,
+							email: values.email,
+							phone: values.phone,
+						};
+
+						if (values.currentPassword.length !== 0) {
+							userValues.password = {
 								current: values.currentPassword,
 								update: values.newPassword,
 							};
 						}
+
 						const { data: user } = await axios.put(
 							'/api/auth/account',
-							values,
+							userValues,
 							{
 								headers: { 'Content-Type': 'application/json' },
 								onUploadProgress: (e) =>
 									setProgress((e.loaded * 100) / e.total),
 							},
 						);
+
+						if (values.isOwner) {
+							const aboutValues = new FormData();
+
+							aboutValues.append('content', values.bio);
+							if (values.picture) {
+								aboutValues.append('files', values.picture);
+								aboutValues.append('remove', values.remove);
+							}
+							const { data } = await axios.put(
+								`/api/about/${about.id}`,
+								aboutValues,
+								{
+									headers: {
+										'Content-Type': 'multipart/form-data',
+									},
+								},
+							);
+							user.about = data.about;
+						}
+
 						dispatch({
 							type: 'UPDATE',
 							payload: { user },
@@ -98,23 +143,25 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 								fullname: user.fullname,
 								email: user.email,
 								phone: user.phone,
-								currentPassword: null,
-								newPassword: null,
+								currentPassword: '',
+								newPassword: '',
+								bio: user.about ? user.about.content : undefined,
+								isOwner: user.about ? true : false,
 							},
 						});
-						currentPasswordRef.current.value = null;
-						newPasswordRef.current.value = null;
-						delete values.password;
 					} catch (err) {
-						console.error(err);
+						console.error(err.response);
 						if (err.response.status === 401) {
 							setFieldError('currentPassword', err.response.data.passwordError);
 							setDisabled(false);
+							dispatch({
+								type: 'ERROR',
+								payload: err.response,
+							});
+							return;
 						}
-						dispatch({
-							type: 'ERROR',
-							payload: err.response,
-						});
+
+						push(`/${err.response.status}`);
 					}
 				}}
 			>
@@ -126,6 +173,7 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 					handleBlur,
 					handleSubmit,
 					isSubmitting,
+					setFieldValue,
 				}) => (
 					<Form onSubmit={handleSubmit}>
 						<Heading as="h2">Your details</Heading>
@@ -173,11 +221,72 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 							/>
 							{errors.phone && touched.phone && <Error>{errors.phone}</Error>}
 						</InputGroup>
+						{about && (
+							<>
+								<InputGroup>
+									<Label htmlFor="bio">Biography</Label>
+									<Input
+										as="textarea"
+										rows="7"
+										type="text"
+										name="bio"
+										id="bio"
+										value={values.bio}
+										onChange={handleChange}
+										onBlur={handleBlur}
+										error={Boolean(errors.bio && touched.bio)}
+										disabled={isDisabled}
+									/>
+									{errors.bio && touched.bio && <Error>{errors.bio}</Error>}
+								</InputGroup>
+								<InputGroup>
+									<Label htmlFor="picture">Profile Picture</Label>
+									<FileInput
+										name="picture"
+										id="picture"
+										type="file"
+										accept=".jpeg, .jpg, .png"
+										ref={pictureInput}
+										onChange={(e) => {
+											if (e.currentTarget.files[0]) {
+												setFieldValue('picture', e.currentTarget.files[0]);
+												setFieldValue('remove', [
+													about.profilePic
+														.split('?')[0]
+														.split('/')
+														.slice(3)
+														.join('/'),
+												]);
+												setPreview({
+													picture: URL.createObjectURL(
+														e.currentTarget.files[0],
+													),
+												});
+											}
+										}}
+									/>
+									<StyledFileInput
+										as="span"
+										hidden={isDisabled}
+										onClick={() => pictureInput.current.click()}
+									>
+										Chose a new picture
+									</StyledFileInput>
+									<ImagePreview
+										id="videoPreview"
+										src={preview.picture}
+										alt="preview"
+									/>
+									{errors.picture && touched.picture && (
+										<Error>{errors.picture}</Error>
+									)}
+								</InputGroup>
+							</>
+						)}
 						<Heading as="h2">Change your password </Heading>
 						<InputGroup>
 							<Label htmlFor="currentPassword">Current</Label>
 							<Input
-								ref={currentPasswordRef}
 								type="password"
 								name="currentPassword"
 								id="currentPassword"
@@ -197,7 +306,6 @@ const ProfileForm = ({ user: { fullname, email, phone }, dispatch }) => {
 						<InputGroup>
 							<Label htmlFor="newPassword">New</Label>
 							<Input
-								ref={newPasswordRef}
 								type="password"
 								name="newPassword"
 								id="newPassword"
@@ -281,6 +389,22 @@ const Input = styled.input`
 	}
 `;
 
+const FileInput = styled.input`
+	display: none;
+`;
+
+const StyledFileInput = styled(Input)`
+	cursor: pointer;
+	display: ${(props) => (props.hidden ? 'none' : 'block')};
+`;
+
+const ImagePreview = styled.img`
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	align-self: start;
+`;
+
 const Error = styled.span`
 	color: red;
 	position: absolute;
@@ -305,7 +429,7 @@ const ButtonWrapper = styled.span`
 
 const Heading = styled.h2`
 	font-size: 1.3em;
-	margin-bottom: 20px;
+	margin: 20px 0;
 `;
 
 ProfileForm.propTypes = {

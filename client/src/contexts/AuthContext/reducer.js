@@ -16,7 +16,6 @@ export const reducer = (state, action) => {
 			return {
 				...state,
 				user: payload.user,
-				// isAuthenticated: payload.isAuthenticated,
 			};
 		case 'VERIFY':
 			return {
@@ -24,11 +23,11 @@ export const reducer = (state, action) => {
 				isAuthenticated: payload.isAuthenticated,
 				user: payload.user,
 			};
-		case 'UPDATE' :
+		case 'UPDATE':
 			return {
 				...state,
-				user : payload.user
-			}
+				user: payload.user,
+			};
 		case 'LOGOUT':
 			return {
 				...state,
@@ -61,7 +60,15 @@ export const actions = {
 					error: { email: 'Email address not found' },
 				};
 			}
+
+			if (user.role === 'owner') {
+				const {
+					data: { about },
+				} = await axios.get('/api/about');
+				user.about = about;
+			}
 			localStorage.setItem('user', JSON.stringify(user));
+
 			dispatch({
 				type: 'LOGIN',
 				payload: {

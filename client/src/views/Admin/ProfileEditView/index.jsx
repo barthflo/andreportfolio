@@ -31,8 +31,11 @@ const ProfileEditView = () => {
 				admin
 			>
 				<Title>User Settings</Title>
-
-				<Card>{user && <ProfileForm user={user} dispatch={dispatch} />}</Card>
+				{user && (
+					<Card>
+						<ProfileForm user={user} dispatch={dispatch} />
+					</Card>
+				)}
 			</Section>
 		</Page>
 	);
