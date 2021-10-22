@@ -59,6 +59,10 @@ const items = [
 				path: '/admin/skills/create',
 				label: 'Add New',
 			},
+			{
+				path: '/admin/cv',
+				label: 'Resume',
+			},
 		],
 	},
 	{
@@ -188,7 +192,6 @@ const Container = styled.li`
 const SubContainer = styled(Container)`
 	flex-direction: column;
 	align-items: start;
-
 	& li:first-child{
 		margin-bottom: 8px;
 		margin-left: 0;
@@ -213,10 +216,6 @@ const SubContainer = styled(Container)`
 			margin-right: 5px;
 	}
 `;
-// const Star = styled(RiStarSFill)`
-// 	color: ${(props) => props.theme.palette.action.active};
-// 	font-size: 8px;
-// `;
 
 const Item = styled.span`
 	text-transform: capitalize;

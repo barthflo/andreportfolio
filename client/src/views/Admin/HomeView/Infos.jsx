@@ -42,6 +42,9 @@ const Infos = () => {
 				<ListItem>
 					<Link to="/admin/skills">Skills</Link>
 				</ListItem>
+				<ListItem>
+					<Link to="/admin/cv">CV</Link>
+				</ListItem>
 			</List>
 
 			{quote && (

@@ -38,6 +38,7 @@ export const reducer = (state, action) => {
 			return {
 				...state,
 				error: payload.error,
+				isAuthenticated: payload.isAuthenticated,
 			};
 		default:
 			throw new Error('No action found to update the store');
@@ -106,6 +107,7 @@ export const actions = {
 				type: 'ERROR',
 				payload: {
 					error: err.response,
+					isAuthenticated: false,
 				},
 			});
 			Cookies.remove('accessToken');
