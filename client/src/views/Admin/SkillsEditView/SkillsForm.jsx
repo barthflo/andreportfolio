@@ -7,8 +7,9 @@ import axios from 'axios';
 import useAppContext from '../../../hooks/useAppContext';
 import ProgressBar from '../../../components/ProgressBar';
 import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
-const SkillsForm = ({ categories }) => {
+const SkillsForm = ({ categories, id, skill, categoryId }) => {
 	const { actions, dispatch } = useAppContext();
 	const [progress, setProgress] = useState(0);
 	const { push } = useHistory();
@@ -19,9 +20,9 @@ const SkillsForm = ({ categories }) => {
 
 			<Formik
 				initialValues={{
-					category: '',
+					category: categoryId,
 					newCategory: '',
-					description: '',
+					description: skill.name,
 				}}
 				validationSchema={Yup.object().shape({
 					category: Yup.string().test(
@@ -48,7 +49,7 @@ const SkillsForm = ({ categories }) => {
 
 						const {
 							data: { info },
-						} = await axios.post('/api/skills', values, {
+						} = await axios.put('/api/skills/' + id, values, {
 							headers: { 'Content-Type': 'application/json' },
 							onUploadProgress: (e) => setProgress((e.loaded * 100) / e.total),
 						});
@@ -106,11 +107,6 @@ const SkillsForm = ({ categories }) => {
 								error={Boolean(errors.category && touched.category)}
 								capitalize
 							>
-								<Option
-									initialValue={values.category}
-									disabled
-									label="Chose category"
-								/>
 								{categories.map((category) => (
 									<Option
 										key={category.id}
@@ -251,5 +247,12 @@ const ButtonWrapper = styled.span`
 	flex-grow: 1;
 	padding: 5px;
 `;
+
+SkillsForm.propTypes = {
+	categories: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+	id: PropTypes.number.isRequired,
+	skill: PropTypes.object.isRequired,
+	category_id: PropTypes.number.isRequired,
+};
 
 export default SkillsForm;

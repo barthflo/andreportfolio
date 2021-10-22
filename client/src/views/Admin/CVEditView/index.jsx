@@ -4,23 +4,18 @@ import Page from '../../../components/Page';
 import Loading from '../../../components/Loading';
 import Section from '../../../components/Section';
 import styled from 'styled-components';
-import BasedButton from '../../../components/Button';
 import { useHistory } from 'react-router';
 import SnackBar from '../../../components/SnackBar';
-import Table from './Table';
+import Card from '../../../components/Card';
+import CVForm from './CVForm';
 
-const SkillsListView = () => {
+const CVEditView = () => {
 	const { home, siteSettings, actions, dispatch } = useAppContext();
 	const {
-		push,
 		location: { state },
 	} = useHistory();
 
 	const [notif, setNotif] = useState(state ? state.notif : null);
-
-	const updateNotifState = (nextState) => {
-		setNotif(nextState);
-	};
 
 	useEffect(() => {
 		if (!home) {
@@ -28,6 +23,7 @@ const SkillsListView = () => {
 		}
 	}, [home, actions, dispatch]);
 
+	console.log(home);
 	useEffect(() => {
 		let timeout;
 		if (notif) {
@@ -40,12 +36,12 @@ const SkillsListView = () => {
 
 	return (
 		<Page
-			title={`Dashboard - Skills List - ${
+			title={`Dashboard - Resume - ${
 				siteSettings
 					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
 					: 'Loading'
 			}`}
-			description={`Administration dashboard skills list page `}
+			description={`Administration dashboard edit resume `}
 		>
 			{!home ? (
 				<LoadingWrapper>
@@ -62,26 +58,13 @@ const SkillsListView = () => {
 					)}
 					<Wrapper>
 						<Header>
-							<h1>Skills List</h1>
-							<BasedButton
-								label="Add New"
-								minWidth="fit-content"
-								dark
-								variant="secondary"
-								onClick={() => push('/admin/skills/create')}
-							/>
+							<h1>Your Resume</h1>
 						</Header>
 
 						<Container>
-							{home.skills.map((skill, index) => (
-								<CardWrapper key={index}>
-									<Table
-										category={skill.skill_group}
-										skills={skill.skills}
-										setNotif={updateNotifState}
-									/>
-								</CardWrapper>
-							))}
+							<Card>
+								<CVForm cv={home.cv} />
+							</Card>
 						</Container>
 					</Wrapper>
 				</Section>
@@ -132,15 +115,4 @@ const Container = styled.div`
 	justify-content: space-between;
 `;
 
-const CardWrapper = styled.div`
-	width: 350px;
-	display: flex;
-	align-items: stretch;
-	flex-grow: 1;
-	margin: 0 5px;
-	@media (min-width: ${(props) => props.theme.breakpoints.md}) {
-		width: 400px;
-	}
-`;
-
-export default SkillsListView;
+export default CVEditView;

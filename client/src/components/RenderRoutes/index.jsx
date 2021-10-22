@@ -125,11 +125,16 @@ export const routes = [
 					import('../../views/Admin/SkillsCreateView'),
 				),
 			},
-			// {
-			// 	path: '/admin/skills/edit/:id',
-			// 	exact: true,
-			// 	component: React.lazy(() => import('../../views/Admin/SkillsEditView')),
-			// },
+			{
+				path: '/admin/skills/edit/:id',
+				exact: true,
+				component: React.lazy(() => import('../../views/Admin/SkillsEditView')),
+			},
+			{
+				path: '/admin/cv',
+				exact: true,
+				component: React.lazy(() => import('../../views/Admin/CVEditView')),
+			},
 			{
 				component: () => <Redirect to="/404" />,
 			},
