@@ -31,7 +31,7 @@ const AppProvider = ({ children }) => {
 	}, [dispatch, pathname]);
 
 	useEffect(() => {
-		if (pathname === '/') {
+		if (pathname === '/' || pathname.includes('skills')) {
 			homeInit();
 		}
 		if (pathname === '/filmography' || pathname === '/admin/filmography') {

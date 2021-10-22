@@ -18,6 +18,9 @@ const SkillsListView = () => {
 
 	const [notif, setNotif] = useState(state ? state.notif : null);
 
+	const updateNotifState = (nextState) => {
+		setNotif(nextState);
+	};
 	useEffect(() => {
 		if (!home) {
 			actions.getHomePageDatas(dispatch);
@@ -34,7 +37,6 @@ const SkillsListView = () => {
 		return () => clearTimeout(timeout);
 	}, [notif]);
 
-	console.log(home);
 	return (
 		<Page
 			title={`Dashboard - Skills List - ${
@@ -65,14 +67,18 @@ const SkillsListView = () => {
 								minWidth="fit-content"
 								dark
 								variant="secondary"
-								onClick={() => push('/admin/filmography/create')}
+								onClick={() => push('/admin/skills/create')}
 							/>
 						</Header>
 
 						<Container>
 							{home.skills.map((skill, index) => (
 								<CardWrapper key={index}>
-									<Table category={skill.skill_group} skills={skill.skills} />
+									<Table
+										category={skill.skill_group}
+										skills={skill.skills}
+										setNotif={updateNotifState}
+									/>
 								</CardWrapper>
 							))}
 						</Container>

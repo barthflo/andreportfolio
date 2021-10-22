@@ -20,7 +20,7 @@ const Index = () => {
 			>
 				<Title>
 					<span>403</span>
-					You are not allowed to view this page.
+					Your session has expired.
 				</Title>
 				<AnimatedGif src={`${process.env.PUBLIC_URL}/ticket.gif`} />
 				<Subtitle>Try to login to access this page.</Subtitle>

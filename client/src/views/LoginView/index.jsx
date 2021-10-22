@@ -17,7 +17,7 @@ const LoginView = () => {
 		return <Redirect to="/500" />;
 	}
 	if (isAuthenticated) {
-		return <Redirect to={state.from} />;
+		return <Redirect to={state && state.from ? state.from : '/admin'} />;
 	}
 
 	return (

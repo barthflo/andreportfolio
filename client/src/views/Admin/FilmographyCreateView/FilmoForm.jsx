@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
@@ -465,25 +464,5 @@ const ImagePreview = styled.img`
 	padding: 2px;
 	object-fit: cover;
 `;
-
-FilmoForm.propTypes = {
-	date: PropTypes.string.isRequired,
-	distributor: PropTypes.string,
-	id: PropTypes.number.isRequired,
-	production: PropTypes.string,
-	role: PropTypes.string.isRequired,
-	synopsis: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired,
-	urls: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-};
-
-FilmoForm.defaultProps = {
-	date: '',
-	id: 1,
-	role: '',
-	synopsis: '',
-	title: '',
-	urls: [],
-};
 
 export default FilmoForm;

@@ -9,8 +9,6 @@ const AuthProvider = ({ children }) => {
 
 	const accessToken = Cookies.get('accessToken');
 
-	// console.log(state);
-
 	useEffect(() => {
 		if (accessToken) {
 			actions.verify(dispatch);

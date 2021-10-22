@@ -119,6 +119,18 @@ export const routes = [
 				component: React.lazy(() => import('../../views/Admin/SkillsListView')),
 			},
 			{
+				path: '/admin/skills/create',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/SkillsCreateView'),
+				),
+			},
+			// {
+			// 	path: '/admin/skills/edit/:id',
+			// 	exact: true,
+			// 	component: React.lazy(() => import('../../views/Admin/SkillsEditView')),
+			// },
+			{
 				component: () => <Redirect to="/404" />,
 			},
 		],

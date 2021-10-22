@@ -8,16 +8,23 @@ import useAppContext from '../../../hooks/useAppContext';
 import axios from 'axios';
 import { HashLink as Link } from 'react-router-hash-link';
 
-const SkillsTable = ({ category, skills }) => {
+const SkillsTable = ({ category, skills, setNotif }) => {
 	const [confirmDelete, setConfirmDelete] = useState(false);
 	const { dispatch, actions } = useAppContext();
 
 	const deleteSkill = async () => {
 		try {
-			const { data: info } = await axios.delete(`/api/skills/${confirmDelete}`);
+			const {
+				data: { info },
+			} = await axios.delete(`/api/skills/${confirmDelete}`);
 			actions.getHomePageDatas(dispatch);
 			setConfirmDelete(false);
 			console.log(info);
+			setNotif({
+				display: true,
+				content: info,
+				status: 'success',
+			});
 		} catch (err) {
 			console.error(err);
 			dispatch({
@@ -82,7 +89,7 @@ const Table = styled.table`
 
 const TableHeader = styled.thead`
 	text-transform: capitalize;
-	font-size: 1.3em;
+	font-size: 1.4em;
 `;
 
 const TableBody = styled.tbody`
@@ -122,6 +129,7 @@ const ButtonLink = styled(Link)`
 SkillsTable.propTypes = {
 	category: PropTypes.string.isRequired,
 	skills: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+	setNotif: PropTypes.func.isRequired,
 };
 
 export default SkillsTable;
