@@ -120,6 +120,10 @@ const MenuItems = ({ onClick }) => {
 				).active = true;
 			return;
 		}
+		if (pathname.includes('messages')) {
+			items.find((item) => item.label === 'Messages').active = true;
+			return;
+		}
 	};
 
 	const renderItems = (items) => {

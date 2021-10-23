@@ -13,9 +13,10 @@ const HomeView = () => {
 	const { height, width } = useWindowDimensions();
 
 	useEffect(() => {
-		actions.getMessages(dispatch, '?read=false');
+		actions.getMessages(dispatch, '?read=0');
 	}, [actions, dispatch]);
 
+	console.log(messages);
 	return (
 		<Page
 			title={`Dashboard - Home - ${
