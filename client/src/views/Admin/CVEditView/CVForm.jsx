@@ -140,6 +140,7 @@ const CVForm = ({ cv }) => {
 									dark
 									width="100%"
 									onClick={() => goBack()}
+									disabled={isSubmitting}
 								/>
 							</ButtonWrapper>
 							<ButtonWrapper>
@@ -235,8 +236,12 @@ const ButtonWrapper = styled.span`
 const ImagePreview = styled.embed`
 	width: 100%;
 	height: 70vh;
-	object-fit: cover;
+	object-fit: contain;
 	margin-bottom: 20px;
+	background: white;
+	border: 1px solid ${(props) => props.theme.palette.border};
+	box-shadow: ${(props) => props.theme.shadows.bottom};
+	overflow: scroll;
 `;
 
 CVForm.propTypes = {

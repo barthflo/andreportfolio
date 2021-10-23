@@ -358,6 +358,7 @@ const FilmoForm = ({
 									dark
 									width="100%"
 									onClick={() => goBack()}
+									disabled={isSubmitting}
 								/>
 							</ButtonWrapper>
 							<ButtonWrapper>

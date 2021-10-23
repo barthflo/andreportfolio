@@ -269,6 +269,7 @@ const SiteSettingsForm = ({ siteSettings, video: { video, picture, id } }) => {
 									dark
 									width="100%"
 									onClick={() => goBack()}
+									disabled={isSubmitting}
 								/>
 							</ButtonWrapper>
 							<ButtonWrapper>

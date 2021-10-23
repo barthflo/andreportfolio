@@ -54,7 +54,7 @@ const InfoContainer = styled.div`
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.lg}) {
 		& > p {
-			font-size: 18px;
+			font-size: 20px;
 		}
 	}
 `;

@@ -82,7 +82,7 @@ export const actions = {
 			} = await axios.get(`/api/about`);
 			const {
 				data: { filmography },
-			} = await axios.get(`/api/filmography?limit=3`);
+			} = await axios.get(`/api/filmography?limit=6`);
 			const {
 				data: { skills, cv },
 			} = await axios.get('/api/skills?category=cv');
