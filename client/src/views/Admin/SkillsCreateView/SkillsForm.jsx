@@ -109,16 +109,16 @@ const SkillsForm = ({ categories }) => {
 								<Option
 									initialValue={values.category}
 									disabled
-									label="Chose category"
-								/>
+									// label="Chose category"
+								>
+									chose category
+								</Option>
 								{categories.map((category) => (
-									<Option
-										key={category.id}
-										value={category.id}
-										label={category.name}
-									/>
+									<Option key={category.id} value={category.id}>
+										{category.name}
+									</Option>
 								))}
-								<Option value="New" label="New category" />
+								<Option value="New">new category</Option>
 							</Input>
 							{errors.category && touched.category && (
 								<Error>{errors.category}</Error>
@@ -167,6 +167,7 @@ const SkillsForm = ({ categories }) => {
 									dark
 									width="100%"
 									onClick={() => push('/admin/skills')}
+									disabled={isSubmitting}
 								/>
 							</ButtonWrapper>
 							<ButtonWrapper>
@@ -216,6 +217,7 @@ const Input = styled(Field)`
 	width: 100%;
 	font-family: ${(props) => props.theme.typography.main};
 	background: ${(props) => props.theme.palette.background.default};
+	-webkit-appearance : none;
 	border: 1px solid
 		${(props) => (props.error ? 'red' : props.theme.palette.background.surface)};
 	padding: 8px 20px;
@@ -228,7 +230,9 @@ const Input = styled(Field)`
 	}
 `;
 
-const Option = styled.option``;
+const Option = styled.option`
+	text-transform: capitalize;
+`;
 
 const Error = styled.span`
 	color: red;

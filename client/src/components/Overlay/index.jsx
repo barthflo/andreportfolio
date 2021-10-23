@@ -39,12 +39,6 @@ const Screen = styled.div`
 	align-items: center;
 `;
 
-// const CloseIcon = styled.i`
-// 	position: absolute;
-// 	top: 10px;
-// 	right: 10px;
-// 	cursor: pointer;
-// `;
 const Card = styled.div`
 	padding: 20px 40px;
 	display: flex;
@@ -53,12 +47,19 @@ const Card = styled.div`
 	align-items: center;
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 	background: ${(props) => props.theme.palette.background.surface.primary};
+	border: 1px solid ${(props) => props.theme.palette.border};
+	width: 97%;
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		width: fit-content;
+		max-width: 650px;
+	}
 `;
 
 const Title = styled.h2`
 	font-weight: 600;
 	font-size: 1.3em;
 	margin-bottom: 20px;
+	text-align: center;
 `;
 
 const Content = styled.p`
@@ -69,10 +70,12 @@ const Content = styled.p`
 
 const Actions = styled.div`
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 `;
 
 const ButtonWrapper = styled.span`
-	padding: 0 5px;
+	padding: 2px 5px;
 `;
 
 Overlay.propTypes = {

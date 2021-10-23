@@ -50,7 +50,9 @@ const Filmography = () => {
 					</CardWrapper>
 				))}
 			</Container>
-			<Link to="/filmography">See all filmography</Link>
+			{filmography.length > 5 && (
+				<Link to="/filmography">See all filmography</Link>
+			)}
 		</Wrapper>
 	);
 };
@@ -105,6 +107,9 @@ const Container = styled.div`
 const CardWrapper = styled.div`
 	width: 350px;
 	flex-grow: 1;
+	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		width: 400px;
+	}
 `;
 
 const Link = styled(HashLink)`

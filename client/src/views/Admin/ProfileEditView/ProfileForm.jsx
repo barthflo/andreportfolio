@@ -328,6 +328,7 @@ const ProfileForm = ({ user: { fullname, email, phone, about }, dispatch }) => {
 									dark
 									width="100%"
 									onClick={() => goBack()}
+									disabled={isSubmitting}
 								/>
 							</ButtonWrapper>
 							<ButtonWrapper>

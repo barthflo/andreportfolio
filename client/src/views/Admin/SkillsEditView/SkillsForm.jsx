@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 const SkillsForm = ({ categories, id, skill, categoryId }) => {
 	const { actions, dispatch } = useAppContext();
 	const [progress, setProgress] = useState(0);
+	const [isDisabled, setDisabled] = useState(true);
 	const { push } = useHistory();
 
 	return (
@@ -106,15 +107,14 @@ const SkillsForm = ({ categories, id, skill, categoryId }) => {
 								onBlur={handleBlur}
 								error={Boolean(errors.category && touched.category)}
 								capitalize
+								disabled={isDisabled}
 							>
 								{categories.map((category) => (
-									<Option
-										key={category.id}
-										value={category.id}
-										label={category.name}
-									/>
+									<Option key={category.id} value={category.id}>
+										{category.name}
+									</Option>
 								))}
-								<Option value="New" label="New category" />
+								<Option value="New">new category</Option>
 							</Input>
 							{errors.category && touched.category && (
 								<Error>{errors.category}</Error>
@@ -131,6 +131,7 @@ const SkillsForm = ({ categories, id, skill, categoryId }) => {
 									onChange={handleChange}
 									onBlur={handleBlur}
 									error={Boolean(errors.newCategory && touched.newCategory)}
+									disabled={isDisabled}
 								/>
 								{errors.newCategory && touched.newCategory && (
 									<Error>{errors.newCategory}</Error>
@@ -149,6 +150,7 @@ const SkillsForm = ({ categories, id, skill, categoryId }) => {
 								onChange={handleChange}
 								onBlur={handleBlur}
 								error={Boolean(errors.description && touched.description)}
+								disabled={isDisabled}
 							/>
 							{errors.description && touched.description && (
 								<Error>{errors.description}</Error>
@@ -163,12 +165,14 @@ const SkillsForm = ({ categories, id, skill, categoryId }) => {
 									dark
 									width="100%"
 									onClick={() => push('/admin/skills')}
+									disabled={isSubmitting}
 								/>
 							</ButtonWrapper>
 							<ButtonWrapper>
 								<Button
-									type="submit"
-									label="Save"
+									type={isDisabled ? 'submit' : 'button'}
+									label={isDisabled ? 'Edit' : 'Save'}
+									onClick={() => setDisabled(!isDisabled)}
 									variant="primary"
 									width="100%"
 									disabled={isSubmitting || Object.keys(errors).length}
@@ -222,6 +226,7 @@ const Input = styled(Field)`
 	&:focus-visible {
 		outline: 1px solid ${(props) => props.theme.palette.text.secondary.light};
 	}
+	-webkit-appearance: none;
 `;
 
 const Option = styled.option``;

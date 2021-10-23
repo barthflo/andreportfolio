@@ -68,7 +68,6 @@ const SkillsTable = ({ category, skills, setNotif }) => {
 										<Button
 											label="Delete"
 											onClick={() => setConfirmDelete(id)}
-											dark
 											minWidth="fit-content"
 											variant="warning"
 										/>

@@ -23,7 +23,6 @@ const CVEditView = () => {
 		}
 	}, [home, actions, dispatch]);
 
-	console.log(home);
 	useEffect(() => {
 		let timeout;
 		if (notif) {
