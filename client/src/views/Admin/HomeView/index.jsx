@@ -16,7 +16,6 @@ const HomeView = () => {
 		actions.getMessages(dispatch, '?read=0');
 	}, [actions, dispatch]);
 
-	console.log(messages);
 	return (
 		<Page
 			title={`Dashboard - Home - ${
