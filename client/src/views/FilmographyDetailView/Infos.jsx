@@ -32,7 +32,7 @@ const Infos = ({ film: { date, synopsis, production, distributor, role } }) => {
 					{role}
 				</Info>
 			</InfoContainer>
-			<Link to="/filmography">Go to filmography</Link>
+			<Link to="/filmography">Back to filmography</Link>
 		</Section>
 	);
 };
@@ -54,7 +54,7 @@ const InfoContainer = styled.div`
 	}
 	@media (min-width: ${(props) => props.theme.breakpoints.lg}) {
 		& > p {
-			font-size: 18px;
+			font-size: 20px;
 		}
 	}
 `;

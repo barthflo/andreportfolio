@@ -93,6 +93,63 @@ export const routes = [
 				),
 			},
 			{
+				path: '/admin/filmography',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/FilmographyListView'),
+				),
+			},
+			{
+				path: '/admin/filmography/create',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/FilmographyCreateView'),
+				),
+			},
+			{
+				path: '/admin/filmography/edit/:slug',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/FilmographyEditView'),
+				),
+			},
+			{
+				path: '/admin/skills',
+				exact: true,
+				component: React.lazy(() => import('../../views/Admin/SkillsListView')),
+			},
+			{
+				path: '/admin/skills/create',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/SkillsCreateView'),
+				),
+			},
+			{
+				path: '/admin/skills/edit/:id',
+				exact: true,
+				component: React.lazy(() => import('../../views/Admin/SkillsEditView')),
+			},
+			{
+				path: '/admin/cv',
+				exact: true,
+				component: React.lazy(() => import('../../views/Admin/CVEditView')),
+			},
+			{
+				path: '/admin/messages',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/MessagesListView'),
+				),
+			},
+			{
+				path: '/admin/messages/:id',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/MessageDetailView'),
+				),
+			},
+			{
 				component: () => <Redirect to="/404" />,
 			},
 		],

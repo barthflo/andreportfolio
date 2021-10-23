@@ -4,16 +4,21 @@ import useAppContext from './hooks/useAppContext';
 import RenderRoutes, { routes } from './components/RenderRoutes';
 import Loading from './components/Loading';
 import { useHistory } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
 
 function App() {
 	const { initialized, error } = useAppContext();
+	const { dispatch } = useAuth();
 	const { push } = useHistory();
 
 	useEffect(() => {
 		if (error) {
+			if (error.status === 403) {
+				dispatch({ type: 'INITIALIZE' });
+			}
 			push(`/${error.status}`);
 		}
-	}, [error, push]);
+	}, [error, push, dispatch]);
 
 	return (
 		<>

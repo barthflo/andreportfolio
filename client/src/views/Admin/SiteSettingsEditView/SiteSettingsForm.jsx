@@ -9,6 +9,7 @@ import axios from 'axios';
 import useAppContext from '../../../hooks/useAppContext';
 import ProgressBar from '../../../components/ProgressBar';
 import SnackBar from '../../../components/SnackBar';
+import { useHistory } from 'react-router';
 
 const SiteSettingsForm = ({ siteSettings, video: { video, picture, id } }) => {
 	const { siteTitle, siteSubtitle } = siteSettings;
@@ -20,6 +21,7 @@ const SiteSettingsForm = ({ siteSettings, video: { video, picture, id } }) => {
 	});
 	const [progress, setProgress] = useState(0);
 	const [notif, setNotif] = useState(null);
+	const { goBack } = useHistory();
 
 	const videoInput = useRef(null);
 	const pictureInput = useRef(null);
@@ -259,16 +261,33 @@ const SiteSettingsForm = ({ siteSettings, video: { video, picture, id } }) => {
 							)}
 						</InputGroup>
 
-						<ButtonWrapper>
-							<Button
-								type={isDisabled ? 'submit' : 'button'}
-								label={isDisabled ? 'Edit' : 'Save'}
-								variant="primary"
-								width="100%"
-								onClick={() => setDisabled(!isDisabled)}
-								disabled={isSubmitting}
-							/>
-						</ButtonWrapper>
+						<ActionsContainer>
+							<ButtonWrapper>
+								<Button
+									type="button"
+									label="Previous"
+									dark
+									width="100%"
+									onClick={() => goBack()}
+									disabled={isSubmitting}
+								/>
+							</ButtonWrapper>
+							<ButtonWrapper>
+								<Button
+									type={isDisabled ? 'submit' : 'button'}
+									label={isDisabled ? 'Edit' : 'Save'}
+									variant="primary"
+									width="100%"
+									onClick={() => setDisabled(!isDisabled)}
+									disabled={isSubmitting || Object.keys(errors).length}
+									title={
+										Object.keys(errors).length > 0
+											? 'One or more fields are invalid. Check the details you entered in the form'
+											: undefined
+									}
+								/>
+							</ButtonWrapper>
+						</ActionsContainer>
 					</Form>
 				)}
 			</Formik>
@@ -329,12 +348,17 @@ const Error = styled.span`
 	text-transform: capitalize;
 `;
 
-const ButtonWrapper = styled.div`
+const ActionsContainer = styled.div`
+	display: flex;
 	width: 100%;
-	align-self: flex-end;
-	@media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-		width: unset;
-	}
+	flex-wrap: wrap;
+	justify-content: flex-end;
+`;
+
+const ButtonWrapper = styled.span`
+	display: flex;
+	flex-grow: 1;
+	padding: 5px;
 `;
 
 const VideoPreview = styled(ReactPlayer)`

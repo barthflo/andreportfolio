@@ -59,6 +59,10 @@ const items = [
 				path: '/admin/skills/create',
 				label: 'Add New',
 			},
+			{
+				path: '/admin/cv',
+				label: 'Resume',
+			},
 		],
 	},
 	{
@@ -97,6 +101,27 @@ const MenuItems = ({ onClick }) => {
 
 		if (pathname === path) {
 			item.active = true;
+			return;
+		}
+
+		if (pathname.includes('filmography/edit')) {
+			items
+				.find((item) => item.label === 'Filmography')
+				.subItems.find(
+					(subitem) => subitem.path === '/admin/filmography',
+				).active = true;
+			return;
+		}
+		if (pathname.includes('skills/edit')) {
+			items
+				.find((item) => item.label === 'Skills')
+				.subItems.find(
+					(subitem) => subitem.path === '/admin/skills',
+				).active = true;
+			return;
+		}
+		if (pathname.includes('messages')) {
+			items.find((item) => item.label === 'Messages').active = true;
 			return;
 		}
 	};
@@ -171,7 +196,6 @@ const Container = styled.li`
 const SubContainer = styled(Container)`
 	flex-direction: column;
 	align-items: start;
-
 	& li:first-child{
 		margin-bottom: 8px;
 		margin-left: 0;
@@ -196,10 +220,6 @@ const SubContainer = styled(Container)`
 			margin-right: 5px;
 	}
 `;
-// const Star = styled(RiStarSFill)`
-// 	color: ${(props) => props.theme.palette.action.active};
-// 	font-size: 8px;
-// `;
 
 const Item = styled.span`
 	text-transform: capitalize;

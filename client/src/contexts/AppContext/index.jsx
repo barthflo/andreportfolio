@@ -31,13 +31,18 @@ const AppProvider = ({ children }) => {
 	}, [dispatch, pathname]);
 
 	useEffect(() => {
-		if (pathname === '/') {
+		if (pathname === '/' || pathname.includes('skills')) {
 			homeInit();
 		}
-		if (pathname === '/filmography') {
+		if (pathname === '/filmography' || pathname === '/admin/filmography') {
 			filmoListInit();
 		}
-		if (pathname.match(/filmography/gi) && pathname !== '/filmography') {
+		if (
+			pathname.match(/filmography/gi) &&
+			pathname !== '/filmography' &&
+			pathname !== '/admin/filmography' &&
+			pathname !== '/admin/filmography/create'
+		) {
 			filmoDetailInit();
 		}
 		//eslint-disable-next-line

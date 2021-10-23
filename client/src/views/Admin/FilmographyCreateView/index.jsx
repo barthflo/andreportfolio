@@ -2,25 +2,23 @@ import React from 'react';
 import Card from '../../../components/Card';
 import Page from '../../../components/Page';
 import Section from '../../../components/Section';
-import ProfileForm from './ProfileForm';
+import FilmoForm from './FilmoForm';
 import useAppContext from '../../../hooks/useAppContext';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import styled from 'styled-components';
-import useAuth from '../../../hooks/useAuth';
 
-const ProfileEditView = () => {
+const FilmographyCreateView = () => {
 	const { height } = useWindowDimensions();
 	const { siteSettings } = useAppContext();
-	const { user, dispatch } = useAuth();
 
 	return (
 		<Page
-			title={`Dashboard - Profile - ${
+			title={`Dashboard - Filmography create form - ${
 				siteSettings
 					? siteSettings.siteTitle + ' - ' + siteSettings.siteSubtitle
 					: 'Loading'
 			}`}
-			description="Administration dashboard user settings page "
+			description="Administration dashboard filmography create page "
 		>
 			<Section
 				minHeight={(height - 70).toString() + 'px'}
@@ -30,12 +28,10 @@ const ProfileEditView = () => {
 				alignItems="start"
 				admin
 			>
-				<Title>User Settings</Title>
-				{user && (
-					<Card>
-						<ProfileForm user={user} dispatch={dispatch} />
-					</Card>
-				)}
+				<Title>Add a new film</Title>
+				<Card>
+					<FilmoForm />
+				</Card>
 			</Section>
 		</Page>
 	);
@@ -44,6 +40,7 @@ const ProfileEditView = () => {
 const Title = styled.h1`
 	font-size: 2em;
 	margin-bottom: 20px;
+	text-transform: capitalize;
 `;
 
-export default ProfileEditView;
+export default FilmographyCreateView;

@@ -13,14 +13,15 @@ const SnackBar = ({ content, status, show }) => {
 
 const Container = styled.div`
 	position: fixed;
-	bottom: 0;
-	right: 0;
-	width: 100%;
+	bottom: 5px;
+	right: 5px;
+	width: calc(100% - 10px);
 	padding: 15px 10px;
 	margin-bottom: 5px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 10000;
 	box-shadow: ${(props) => props.theme.shadows.bottom};
 	background: ${(props) => {
 		if (props.status === 'success') {
