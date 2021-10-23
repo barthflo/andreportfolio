@@ -136,6 +136,20 @@ export const routes = [
 				component: React.lazy(() => import('../../views/Admin/CVEditView')),
 			},
 			{
+				path: '/admin/messages',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/MessagesListView'),
+				),
+			},
+			{
+				path: '/admin/messages/:id',
+				exact: true,
+				component: React.lazy(() =>
+					import('../../views/Admin/MessageDetailView'),
+				),
+			},
+			{
 				component: () => <Redirect to="/404" />,
 			},
 		],
