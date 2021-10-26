@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Page from '../../../components/Page';
 import Section from '../../../components/Section';
 import useAppContext from '../../../hooks/useAppContext';
+import useAuth from '../../../hooks/useAuth';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import Infos from './Infos';
 import Messages from './Messages';
@@ -11,6 +13,7 @@ import Loading from '../../../components/Loading';
 const HomeView = () => {
 	const { siteSettings, actions, dispatch, messages } = useAppContext();
 	const { height, width } = useWindowDimensions();
+	const { user } = useAuth();
 
 	useEffect(() => {
 		actions.getMessages(dispatch, '?read=0');
@@ -38,9 +41,7 @@ const HomeView = () => {
 					alignItems={width < 990 ? 'start' : 'center'}
 					admin
 				>
-					<Title>
-						Welcome {JSON.parse(localStorage.getItem('user')).fullname}!
-					</Title>
+					<Title>Welcome {user && user.fullname}!</Title>
 					<CardsContainer>
 						<Messages messagesCount={messages.length} />
 						<Infos />
