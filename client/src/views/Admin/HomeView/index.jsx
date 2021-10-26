@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Page from '../../../components/Page';
 import Section from '../../../components/Section';
